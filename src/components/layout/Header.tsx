@@ -19,6 +19,11 @@ const linkClasses = ({ isActive }: { isActive: boolean }) =>
       : "text-stone-500 hover:bg-stone-100 hover:text-stone-900"
   }`
 
+const sheetLinkClasses = ({ isActive }: { isActive: boolean }) =>
+  `text-base font-medium transition-colors duration-200 ${
+    isActive ? "text-amber-600" : "text-stone-900 hover:text-stone-900"
+  }`
+
 export default function Header() {
   const [open, setOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
@@ -230,14 +235,14 @@ export default function Header() {
               </button>
             </SheetTrigger>
             <SheetContent side="right" className="md:hidden">
-              <nav className="px-4 pt-8">
+              <nav className="pl-6 pt-8">
                 <ul className="flex flex-col gap-4">
                   {navItems.map((item) => (
                     <li key={item.to}>
                       <NavLink
                         to={item.to}
                         end={item.end}
-                        className={linkClasses}
+                        className={sheetLinkClasses}
                         onClick={() => setOpen(false)}
                       >
                         {item.label}
