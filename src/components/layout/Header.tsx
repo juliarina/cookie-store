@@ -234,7 +234,7 @@ export default function Header() {
                 </svg>
               </button>
             </SheetTrigger>
-            <SheetContent side="right" className="md:hidden">
+            <SheetContent side="right" className="md:hidden max-w-80">
               <nav className="pl-6 pt-8">
                 <ul className="flex flex-col gap-4">
                   {navItems.map((item) => (
