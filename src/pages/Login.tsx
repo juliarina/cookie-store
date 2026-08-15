@@ -1,0 +1,118 @@
+import { useState, type FormEvent } from "react"
+import { Link } from "react-router"
+import { ArrowRight, LogIn } from "lucide-react"
+import CookieIcon from "../components/CookieIcon"
+
+const inputClasses =
+  "w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-stone-900 outline-none transition placeholder:text-stone-400 focus:border-amber-500 focus:ring-4 focus:ring-amber-500/15"
+
+export default function Login() {
+  const [submitted, setSubmitted] = useState(false)
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    event.currentTarget.reset()
+    setSubmitted(true)
+  }
+
+  return (
+    <section className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center overflow-hidden px-4 py-16 sm:px-6">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0 bg-grid text-stone-900 bg-grid-fade" />
+        <div className="absolute -top-32 left-1/2 h-80 w-80 -translate-x-1/2 animate-glow rounded-full bg-amber-300/40 blur-3xl" />
+      </div>
+
+      <div className="relative w-full max-w-md">
+        <div className="rounded-3xl border border-stone-200 bg-white p-8 shadow-xl shadow-stone-900/5 sm:p-10">
+          <div className="flex flex-col items-center text-center">
+            <CookieIcon className="h-16 w-16" />
+            <h1 className="mt-4 text-2xl font-bold tracking-tight text-stone-900">
+              Welcome back
+            </h1>
+            <p className="mt-2 text-sm text-stone-500">
+              Sign in to track your orders and check out faster.
+            </p>
+          </div>
+
+          {submitted && (
+            <div className="mt-6 flex items-center gap-2 rounded-2xl bg-emerald-50 px-5 py-4 text-sm font-medium text-emerald-700">
+              <span className="h-2 w-2 rounded-full bg-emerald-500" />
+              Signed in! (demo) Redirecting you to the menu…
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="mt-8">
+            <div>
+              <label
+                htmlFor="email"
+                className="mb-2 block text-sm font-semibold text-stone-700"
+              >
+                Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                placeholder="jane@example.com"
+                className={inputClasses}
+              />
+            </div>
+
+            <div className="mt-5">
+              <label
+                htmlFor="password"
+                className="mb-2 block text-sm font-semibold text-stone-700"
+              >
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                required
+                placeholder="••••••••"
+                className={inputClasses}
+              />
+            </div>
+
+            <div className="mt-4 flex items-center justify-between">
+              <label className="flex items-center gap-2 text-sm text-stone-500">
+                <input
+                  type="checkbox"
+                  className="h-4 w-4 rounded border-stone-300 accent-amber-500"
+                />
+                Remember me
+              </label>
+              <a
+                href="#"
+                className="text-sm font-semibold text-amber-600 transition hover:text-amber-700"
+              >
+                Forgot password?
+              </a>
+            </div>
+
+            <button
+              type="submit"
+              className="group mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-stone-900 px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-stone-900/20 transition-all duration-200 hover:scale-[1.02] hover:bg-amber-500 active:scale-[0.98]"
+            >
+              <LogIn className="h-4 w-4" />
+              Sign in
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+            </button>
+          </form>
+
+          <p className="mt-6 text-center text-sm text-stone-500">
+            New to Crumb &amp; Co.?{" "}
+            <Link
+              to="/register"
+              className="font-semibold text-amber-600 transition hover:text-amber-700"
+            >
+              Create an account
+            </Link>
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}

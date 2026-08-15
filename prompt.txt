@@ -1,0 +1,23 @@
+Act as a principal UI/UX icon designer. Please redesign the existing React CookieIcon SVG component into a Modern Semi-Flat (Flat 2.0) aesthetic.
+
+Style Requirements:
+
+NO Black/Dark Outlines: Remove all dark or black strokes/borders completely. The design should rely purely on color contrast, soft tonal layering, and subtle shadows/highlights to define shapes.
+
+Semi-Flat Depth: Not entirely flat, but not 3D cartoonish either. Use soft color shifts, subtle gradients, and inner tonal shadows to give it a sophisticated, modern tech-brand feel (similar to Stripe or Apple's UI icons).
+
+Refined Details:
+
+Add subtle, soft surface cracks/texture using low-opacity tonal strokes.
+
+Add detailed, organic chocolate chips with dual-tone depth (a base chocolate color with a soft lighter tint on top).
+
+Use a warm, premium color palette (e.g., golden warm dough, soft cream highlights, rich cocoa brown).
+
+Technical Requirements:
+
+Keep it as a clean React TypeScript component export.
+
+Preserve the viewBox="0 0 32 32", className prop, and aria-hidden="true".
+
+Use clean, valid SVG paths without using heavy CSS filters or external assets.
