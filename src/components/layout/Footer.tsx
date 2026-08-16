@@ -1,5 +1,5 @@
 import { Link } from "react-router"
-import CookieIcon from "../CookieIcon"
+import { RxCookie } from "react-icons/rx"
 
 const quickLinks = [
   { to: "/", label: "Home" },
@@ -23,7 +23,7 @@ export default function Footer() {
         <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-around">
           <div className="max-w-lg lg:max-w-xs">
             <div className="flex items-center gap-2">
-              <CookieIcon className="h-8 w-8 text-amber-500" />
+              <RxCookie className="h-8 w-8 text-amber-500" />
               <span className="font-logo text-xl font-bold tracking-tight text-white">
                 Crumb & Co.
               </span>

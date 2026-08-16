@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react"
 import { Link } from "react-router"
 import { ArrowRight, ShoppingCart, Trash2 } from "lucide-react"
-import CookieIcon from "../components/CookieIcon"
+import { RxCookie } from "react-icons/rx"
 import { useCart } from "../context/CartContext"
 
 const inputClasses =
@@ -201,7 +201,7 @@ export default function Checkout() {
             {items.map((item) => (
               <li key={item.cookie.id} className="flex items-center gap-3 py-4">
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-amber-50">
-                  <CookieIcon className="h-9 w-9 text-amber-500" />
+                  <RxCookie className="h-9 w-9 text-amber-500" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-semibold text-stone-900">

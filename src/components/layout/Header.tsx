@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { Link, NavLink, useLocation, useNavigate } from "react-router"
 import { Minus, Plus, ShoppingCart, Trash2, User } from "lucide-react"
-import CookieIcon from "../CookieIcon"
+import { RxCookie } from "react-icons/rx"
 import { useCart } from "../../context/CartContext"
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
 
@@ -59,7 +59,7 @@ export default function Header() {
           className="group flex items-center gap-2"
           onClick={() => setOpen(false)}
         >
-          <CookieIcon className="h-8 w-8 text-amber-500 transition-transform duration-300 group-hover:rotate-12" />
+          <RxCookie className="h-8 w-8 text-amber-500 transition-transform duration-300 group-hover:rotate-12" />
           <span className="font-logo text-xl font-bold tracking-tight text-stone-900">
             Crumb & Co.
           </span>
@@ -138,7 +138,7 @@ export default function Header() {
                           className="flex items-center gap-3 py-3"
                         >
                           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-amber-50">
-                            <CookieIcon className="h-8 w-8 text-amber-500" />
+                            <RxCookie className="h-8 w-8 text-amber-500" />
                           </div>
                           <div className="min-w-0 flex-1">
                             <p className="truncate text-sm font-semibold text-stone-900">

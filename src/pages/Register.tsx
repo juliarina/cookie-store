@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react"
 import { Link } from "react-router"
 import { ArrowRight, UserPlus } from "lucide-react"
-import CookieIcon from "../components/CookieIcon"
+import { RxCookie } from "react-icons/rx"
 
 const inputClasses =
   "w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-stone-900 outline-none transition placeholder:text-stone-400 focus:border-amber-500 focus:ring-4 focus:ring-amber-500/15"
@@ -25,7 +25,7 @@ export default function Register() {
       <div className="relative w-full max-w-md">
         <div className="rounded-3xl border border-stone-200 bg-white p-8 shadow-xl shadow-stone-900/5 sm:p-10">
           <div className="flex flex-col items-center text-center">
-            <CookieIcon className="h-16 w-16" />
+            <RxCookie className="h-16 w-16" />
             <h1 className="mt-4 text-2xl font-bold tracking-tight text-stone-900">
               Create your account
             </h1>
