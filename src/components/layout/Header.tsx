@@ -1,9 +1,17 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { Link, NavLink, useLocation, useNavigate } from "react-router"
 import { Minus, Plus, ShoppingCart, Trash2, User } from "lucide-react"
 import { RxCookie } from "react-icons/rx"
 import { useCart } from "../../context/CartContext"
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../ui/sheet"
 
 const navItems = [
   { to: "/", label: "Home", end: true },
@@ -24,10 +32,11 @@ const sheetLinkClasses = ({ isActive }: { isActive: boolean }) =>
     isActive ? "text-amber-600" : "text-stone-900 hover:text-stone-900"
   }`
 
+const DELIVERY_FEE = 5
+
 export default function Header() {
   const [open, setOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
-  const cartRef = useRef<HTMLDivElement>(null)
   const { items, totalCount, totalPrice, updateQuantity, removeFromCart } =
     useCart()
   const location = useLocation()
@@ -37,19 +46,6 @@ export default function Header() {
     setCartOpen(false)
     setOpen(false)
   }, [location])
-
-  useEffect(() => {
-    if (!cartOpen) {
-      return
-    }
-    function handleClickOutside(event: MouseEvent) {
-      if (cartRef.current && !cartRef.current.contains(event.target as Node)) {
-        setCartOpen(false)
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [cartOpen])
 
   return (
     <header className="sticky top-0 z-50 border-b border-stone-200/80 bg-white/75 backdrop-blur-xl">
@@ -89,66 +85,68 @@ export default function Header() {
             <User className="h-5 w-5" />
           </Link>
 
-          <div className="relative" ref={cartRef}>
-            <button
-              type="button"
-              aria-label={`Open cart, ${totalCount} items`}
-              onClick={() => setCartOpen((v) => !v)}
-              className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-stone-700 transition-all duration-200 hover:scale-105 hover:bg-stone-100"
-            >
-              <ShoppingCart className="h-5 w-5" />
-              {totalCount > 0 && (
-                <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-500 px-1 text-[11px] font-bold text-white shadow-sm">
-                  {totalCount}
-                </span>
-              )}
-            </button>
-
-            {cartOpen && (
-              <div className="absolute right-0 top-full z-50 mt-3 w-80 overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-2xl shadow-stone-900/10">
-                <div className="flex items-center justify-between border-b border-stone-100 bg-stone-50/80 px-5 py-3.5">
-                  <h2 className="text-sm font-semibold text-stone-900">
-                    Your Cart
-                  </h2>
-                  <span className="text-xs text-stone-500">
-                    {totalCount} item{totalCount === 1 ? "" : "s"}
+          <Sheet open={cartOpen} onOpenChange={setCartOpen}>
+            <SheetTrigger asChild>
+              <button
+                type="button"
+                aria-label={`Open cart, ${totalCount} items`}
+                className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-stone-700 transition-all duration-200 hover:scale-105 hover:bg-stone-100"
+              >
+                <ShoppingCart className="h-5 w-5" />
+                {totalCount > 0 && (
+                  <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-500 px-1 text-[11px] font-bold text-white shadow-sm">
+                    {totalCount}
                   </span>
-                </div>
+                )}
+              </button>
+            </SheetTrigger>
 
-                {items.length === 0 ? (
-                  <div className="px-5 py-10 text-center">
-                    <ShoppingCart className="mx-auto h-10 w-10 text-stone-300" />
-                    <p className="mt-3 text-sm font-medium text-stone-600">
-                      Your cart is empty
-                    </p>
-                    <Link
-                      to="/menu"
-                      onClick={() => setCartOpen(false)}
-                      className="mt-4 inline-flex rounded-full bg-stone-900 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-stone-800"
-                    >
-                      Browse the Menu
-                    </Link>
-                  </div>
-                ) : (
-                  <>
-                    <ul className="max-h-72 divide-y divide-stone-100 overflow-y-auto px-5">
-                      {items.map((item) => (
-                        <li
-                          key={item.cookie.id}
-                          className="flex items-center gap-3 py-3"
-                        >
-                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-amber-50">
-                            <RxCookie className="h-8 w-8 text-amber-500" />
-                          </div>
-                          <div className="min-w-0 flex-1">
-                            <p className="truncate text-sm font-semibold text-stone-900">
-                              {item.cookie.name}
-                            </p>
-                            <p className="text-xs text-stone-500">
-                              ${item.cookie.price.toFixed(2)}
-                            </p>
-                          </div>
-                          <div className="flex items-center gap-1">
+            <SheetContent side="right" className="max-w-sm">
+              <SheetHeader>
+                <SheetTitle className="text-sm font-semibold tracking-widest text-stone-500">
+                  Your cart
+                </SheetTitle>
+                <SheetDescription>
+                  {totalCount} item{totalCount === 1 ? "" : "s"}
+                </SheetDescription>
+              </SheetHeader>
+
+              {items.length === 0 ? (
+                <div className="flex flex-1 flex-col items-center justify-center px-6 py-16 text-center">
+                  <ShoppingCart className="h-12 w-12 text-stone-300" />
+                  <p className="mt-4 text-sm font-medium text-stone-600">
+                    Your cart is empty
+                  </p>
+                  <p className="mt-1 text-xs text-stone-400">
+                    Add some cookies to get started.
+                  </p>
+                  <Link
+                    to="/menu"
+                    onClick={() => setCartOpen(false)}
+                    className="mt-5 inline-flex rounded-full bg-stone-900 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-stone-800"
+                  >
+                    Browse the Menu
+                  </Link>
+                </div>
+              ) : (
+                <>
+                  <ul className="flex-1 divide-y divide-stone-100 overflow-y-auto px-5 py-2">
+                    {items.map((item) => (
+                      <li
+                        key={item.cookie.id}
+                        className="flex items-start gap-3 py-4"
+                      >
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-amber-50">
+                          <RxCookie className="h-8 w-8 text-amber-500" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <p className="truncate text-sm font-semibold text-stone-900">
+                            {item.cookie.name}
+                          </p>
+                          <p className="mt-0.5 text-xs text-stone-500">
+                            ${item.cookie.price.toFixed(2)}
+                          </p>
+                          <div className="mt-2 flex items-center gap-1">
                             <button
                               type="button"
                               aria-label={`Decrease quantity of ${item.cookie.name}`}
@@ -180,40 +178,63 @@ export default function Header() {
                               <Plus className="h-3.5 w-3.5" />
                             </button>
                           </div>
+                        </div>
+                        <div className="flex flex-col items-end gap-1">
+                          <span className="text-sm font-bold text-stone-900">
+                            ${(item.cookie.price * item.quantity).toFixed(2)}
+                          </span>
+                          <span className="text-[11px] text-stone-400">
+                            {item.quantity} × ${item.cookie.price.toFixed(2)}
+                          </span>
                           <button
                             type="button"
                             aria-label={`Remove ${item.cookie.name} from cart`}
                             onClick={() => removeFromCart(item.cookie.id)}
-                            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-stone-400 transition hover:bg-red-50 hover:text-red-500"
+                            className="mt-1 flex h-7 w-7 items-center justify-center rounded-full text-stone-400 transition hover:bg-red-50 hover:text-red-500"
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="border-t border-stone-100 bg-stone-50/80 px-5 py-4">
-                      <div className="flex items-center justify-between text-sm text-stone-600">
-                        <span>Total</span>
-                        <span className="text-lg font-extrabold text-stone-900">
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <SheetFooter className="border-t border-stone-100 bg-stone-50/80">
+                    <dl className="w-full space-y-2 text-sm">
+                      <div className="flex items-center justify-between text-stone-600">
+                        <dt>Subtotal</dt>
+                        <dd className="font-semibold text-stone-900">
                           ${totalPrice.toFixed(2)}
-                        </span>
+                        </dd>
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setCartOpen(false)
-                          navigate("/checkout")
-                        }}
-                        className="mt-3 w-full rounded-full bg-stone-900 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.01] hover:bg-stone-800"
-                      >
-                        Checkout
-                      </button>
-                    </div>
-                  </>
-                )}
-              </div>
-            )}
-          </div>
+                      <div className="flex items-center justify-between text-stone-600">
+                        <dt>Delivery</dt>
+                        <dd className="font-semibold text-stone-900">
+                          ${DELIVERY_FEE.toFixed(2)}
+                        </dd>
+                      </div>
+                      <div className="flex items-center justify-between border-t border-stone-200 pt-2 text-base">
+                        <dt className="font-semibold text-stone-900">Total</dt>
+                        <dd className="text-lg font-extrabold text-stone-900">
+                          ${(totalPrice + DELIVERY_FEE).toFixed(2)}
+                        </dd>
+                      </div>
+                    </dl>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCartOpen(false)
+                        navigate("/checkout")
+                      }}
+                      className="w-full rounded-full bg-stone-900 py-3 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.01] hover:bg-amber-500"
+                    >
+                      Proceed to Checkout
+                    </button>
+                  </SheetFooter>
+                </>
+              )}
+            </SheetContent>
+          </Sheet>
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
