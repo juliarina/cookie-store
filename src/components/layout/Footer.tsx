@@ -21,7 +21,7 @@ export default function Footer() {
     <footer className="border-t border-white/10 bg-stone-950 text-stone-400">
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-8 lg:px-12">
         <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-around">
-          <div className="max-w-xs">
+          <div className="max-w-lg lg:max-w-xs">
             <div className="flex items-center gap-2">
               <CookieIcon className="h-8 w-8 text-amber-500" />
               <span className="font-logo text-xl font-bold tracking-tight text-white">
