@@ -1,18 +1,26 @@
-import { useState, type FormEvent } from "react"
-import { Link } from "react-router"
+import { type FormEvent } from "react"
+import { Link, useLocation, useNavigate } from "react-router"
 import { ArrowRight, UserPlus } from "lucide-react"
 import { RxCookie } from "react-icons/rx"
+import { useAuth } from "../context/AuthContext"
 
 const inputClasses =
   "w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-stone-900 outline-none transition placeholder:text-stone-400 focus:border-amber-500 focus:ring-4 focus:ring-amber-500/15"
 
 export default function Register() {
-  const [submitted, setSubmitted] = useState(false)
+  const { register } = useAuth()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from = (location.state as { from?: string } | null)?.from ?? "/menu"
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    event.currentTarget.reset()
-    setSubmitted(true)
+    const formData = new FormData(event.currentTarget)
+    register(
+      String(formData.get("name") ?? ""),
+      String(formData.get("email") ?? ""),
+    )
+    navigate(from, { replace: true })
   }
 
   return (
@@ -34,10 +42,10 @@ export default function Register() {
             </p>
           </div>
 
-          {submitted && (
+          {from !== "/menu" && (
             <div className="mt-6 flex items-center gap-2 rounded-2xl bg-emerald-50 px-5 py-4 text-sm font-medium text-emerald-700">
               <span className="h-2 w-2 rounded-full bg-emerald-500" />
-              Account created! (demo) You can now sign in.
+              Account created! You'll be taken to checkout after signing in.
             </div>
           )}
 
@@ -108,6 +116,7 @@ export default function Register() {
             Already have an account?{" "}
             <Link
               to="/login"
+              state={{ from }}
               className="font-semibold text-amber-600 transition hover:text-amber-700"
             >
               Sign in

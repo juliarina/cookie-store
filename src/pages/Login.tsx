@@ -1,18 +1,32 @@
 import { useState, type FormEvent } from "react"
-import { Link } from "react-router"
+import { Link, useLocation, useNavigate } from "react-router"
 import { ArrowRight, LogIn } from "lucide-react"
 import { RxCookie } from "react-icons/rx"
+import { useAuth } from "../context/AuthContext"
 
 const inputClasses =
   "w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-stone-900 outline-none transition placeholder:text-stone-400 focus:border-amber-500 focus:ring-4 focus:ring-amber-500/15"
 
 export default function Login() {
-  const [submitted, setSubmitted] = useState(false)
+  const { login } = useAuth()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const [error, setError] = useState<string | null>(null)
+  const from = (location.state as { from?: string } | null)?.from ?? "/menu"
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    event.currentTarget.reset()
-    setSubmitted(true)
+    const formData = new FormData(event.currentTarget)
+    const email = String(formData.get("email") ?? "")
+    const remember = formData.get("remember") === "on"
+    const signedIn = login(email, remember)
+    if (!signedIn) {
+      setError(
+        `No account found for ${email}. Create an account to get started.`,
+      )
+      return
+    }
+    navigate(from, { replace: true })
   }
 
   return (
@@ -34,10 +48,10 @@ export default function Login() {
             </p>
           </div>
 
-          {submitted && (
-            <div className="mt-6 flex items-center gap-2 rounded-2xl bg-emerald-50 px-5 py-4 text-sm font-medium text-emerald-700">
-              <span className="h-2 w-2 rounded-full bg-emerald-500" />
-              Signed in! (demo) Redirecting you to the menu…
+          {error && (
+            <div className="mt-6 flex items-center gap-2 rounded-2xl bg-red-50 px-5 py-4 text-sm font-medium text-red-700">
+              <span className="h-2 w-2 rounded-full bg-red-500" />
+              {error}
             </div>
           )}
 
@@ -79,6 +93,7 @@ export default function Login() {
             <div className="mt-4 flex items-center justify-between">
               <label className="flex items-center gap-2 text-sm text-stone-500">
                 <input
+                  name="remember"
                   type="checkbox"
                   className="h-4 w-4 rounded border-stone-300 accent-amber-500"
                 />
@@ -106,6 +121,7 @@ export default function Login() {
             New to Crumb &amp; Co.?{" "}
             <Link
               to="/register"
+              state={{ from }}
               className="font-semibold text-amber-600 transition hover:text-amber-700"
             >
               Create an account

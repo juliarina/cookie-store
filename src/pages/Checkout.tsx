@@ -1,8 +1,10 @@
 import { useState, type FormEvent } from "react"
 import { Link } from "react-router"
-import { ArrowRight, ShoppingCart, Trash2 } from "lucide-react"
+import { ArrowRight, Package, ShoppingCart, Trash2 } from "lucide-react"
 import { RxCookie } from "react-icons/rx"
+import { useAuth } from "../context/AuthContext"
 import { useCart } from "../context/CartContext"
+import { useOrders } from "../context/OrderContext"
 
 const inputClasses =
   "w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-stone-900 outline-none transition placeholder:text-stone-400 focus:border-amber-500 focus:ring-4 focus:ring-amber-500/15"
@@ -10,14 +12,32 @@ const inputClasses =
 export default function Checkout() {
   const { items, totalPrice, removeFromCart, updateQuantity, clearCart } =
     useCart()
+  const { user } = useAuth()
+  const { placeOrder } = useOrders()
   const [placed, setPlaced] = useState(false)
+  const [placedOrderId, setPlacedOrderId] = useState<string | null>(null)
 
   const DELIVERY_FEE = 5
   const grandTotal = items.length > 0 ? totalPrice + DELIVERY_FEE : 0
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+    const order = placeOrder({
+      items,
+      subtotal: totalPrice,
+      deliveryFee: DELIVERY_FEE,
+      total: grandTotal,
+      delivery: {
+        name: String(formData.get("name") ?? ""),
+        email: String(formData.get("email") ?? ""),
+        phone: String(formData.get("phone") ?? ""),
+        city: String(formData.get("city") ?? ""),
+        address: String(formData.get("address") ?? ""),
+      },
+    })
     clearCart()
+    setPlacedOrderId(order.id)
     setPlaced(true)
   }
 
@@ -41,16 +61,25 @@ export default function Checkout() {
           Order placed!
         </h1>
         <p className="mt-4 text-lg text-stone-600">
-          Thanks for your order — your cookies are being baked fresh and will be
-          delivered warm.
+          Thanks for your order{placedOrderId ? ` — ${placedOrderId}` : ""}.
+          Your cookies are being baked fresh and will be delivered warm.
         </p>
-        <Link
-          to="/menu"
-          className="group mt-8 inline-flex items-center gap-2 rounded-full bg-stone-900 px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-stone-900/20 transition-all duration-200 hover:scale-[1.02] hover:bg-amber-500 active:scale-[0.98]"
-        >
-          Keep browsing
-          <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
-        </Link>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <Link
+            to="/orders"
+            className="group inline-flex items-center gap-2 rounded-full bg-emerald-600 px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-emerald-600/20 transition-all duration-200 hover:scale-[1.02] hover:bg-emerald-500 active:scale-[0.98]"
+          >
+            <Package className="h-4 w-4" />
+            View your orders
+          </Link>
+          <Link
+            to="/menu"
+            className="group inline-flex items-center gap-2 rounded-full bg-stone-900 px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-stone-900/20 transition-all duration-200 hover:scale-[1.02] hover:bg-amber-500 active:scale-[0.98]"
+          >
+            Keep browsing
+            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+          </Link>
+        </div>
       </section>
     )
   }
@@ -112,6 +141,7 @@ export default function Checkout() {
                 name="name"
                 type="text"
                 required
+                defaultValue={user?.name ?? ""}
                 placeholder="Jane Doe"
                 className={inputClasses}
               />
@@ -128,6 +158,7 @@ export default function Checkout() {
                 name="email"
                 type="email"
                 required
+                defaultValue={user?.email ?? ""}
                 placeholder="jane@example.com"
                 className={inputClasses}
               />

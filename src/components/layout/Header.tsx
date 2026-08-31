@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { Link, NavLink, useLocation, useNavigate } from "react-router"
-import { Minus, Plus, ShoppingCart, Trash2, User } from "lucide-react"
+import { LogOut, Minus, Plus, ShoppingCart, Trash2, User } from "lucide-react"
 import { RxCookie } from "react-icons/rx"
+import { useAuth } from "../../context/AuthContext"
 import { useCart } from "../../context/CartContext"
 import {
   Sheet,
@@ -16,6 +17,7 @@ import {
 const navItems = [
   { to: "/", label: "Home", end: true },
   { to: "/menu", label: "Menu", end: false },
+  { to: "/orders", label: "Orders", end: false },
   { to: "/about", label: "About", end: false },
   { to: "/contact", label: "Contact", end: false },
 ]
@@ -37,10 +39,16 @@ const DELIVERY_FEE = 5
 export default function Header() {
   const [open, setOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
+  const { user, logout } = useAuth()
   const { items, totalCount, totalPrice, updateQuantity, removeFromCart } =
     useCart()
   const location = useLocation()
   const navigate = useNavigate()
+
+  function handleLogout() {
+    logout()
+    navigate("/")
+  }
 
   useEffect(() => {
     setCartOpen(false)
@@ -70,20 +78,43 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link
-            to="/login"
-            className="hidden items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-700 transition-all duration-200 hover:scale-[1.03] hover:border-stone-400 hover:bg-stone-50 active:scale-[0.98] sm:inline-flex"
-          >
-            <User className="h-4 w-4" />
-            Sign in
-          </Link>
-          <Link
-            to="/login"
-            aria-label="Sign in"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-stone-700 transition hover:bg-stone-100 sm:hidden"
-          >
-            <User className="h-5 w-5" />
-          </Link>
+          {user ? (
+            <>
+              <span className="hidden items-center gap-2 lg:inline-flex">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-500 text-sm font-bold text-white">
+                  {user.name.charAt(0).toUpperCase()}
+                </span>
+                <span className="text-sm font-semibold text-stone-700">
+                  {user.name.split(" ")[0]}
+                </span>
+              </span>
+              <button
+                type="button"
+                onClick={handleLogout}
+                aria-label="Sign out"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full text-stone-700 transition hover:bg-stone-100"
+              >
+                <LogOut className="h-5 w-5" />
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="hidden items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-700 transition-all duration-200 hover:scale-[1.03] hover:border-stone-400 hover:bg-stone-50 active:scale-[0.98] sm:inline-flex"
+              >
+                <User className="h-4 w-4" />
+                Sign in
+              </Link>
+              <Link
+                to="/login"
+                aria-label="Sign in"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full text-stone-700 transition hover:bg-stone-100 sm:hidden"
+              >
+                <User className="h-5 w-5" />
+              </Link>
+            </>
+          )}
 
           <Sheet open={cartOpen} onOpenChange={setCartOpen}>
             <SheetTrigger asChild>
