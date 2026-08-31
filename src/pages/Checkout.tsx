@@ -60,7 +60,7 @@ export default function Checkout() {
         <h1 className="mt-8 text-4xl font-bold tracking-tight text-stone-900">
           Order placed!
         </h1>
-        <p className="mt-4 text-lg text-stone-600">
+        <p className="mt-4 text-base text-stone-600 sm:text-lg">
           Thanks for your order{placedOrderId ? ` — ${placedOrderId}` : ""}.
           Your cookies are being baked fresh and will be delivered warm.
         </p>
@@ -114,7 +114,7 @@ export default function Checkout() {
         <h1 className="mt-3 text-4xl font-bold tracking-tight text-stone-900 sm:text-5xl">
           Almost there
         </h1>
-        <p className="mt-4 text-lg text-stone-600">
+        <p className="mt-4 text-base text-stone-600 sm:text-lg">
           Fill in your details and we'll bake your cookies fresh.
         </p>
       </div>

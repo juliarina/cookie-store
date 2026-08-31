@@ -221,7 +221,7 @@ export default function Home() {
             <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
               Baked to be better
             </h2>
-            <p className="mt-4 text-lg text-stone-400">
+            <p className="mt-4 text-base text-stone-400 sm:text-lg">
               Every cookie is a small ritual — slow, careful, and worth the
               wait.
             </p>

@@ -42,7 +42,7 @@ export default function Contact() {
         <h1 className="mt-3 text-4xl font-bold tracking-tight text-stone-900 sm:text-5xl">
           We'd love to hear from you
         </h1>
-        <p className="mt-4 text-lg text-stone-600">
+        <p className="mt-4 text-base text-stone-600 sm:text-lg">
           Questions about an order, a custom cookie box, or catering? Send us a
           message and we'll get back to you within a day.
         </p>

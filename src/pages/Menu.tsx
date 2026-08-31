@@ -17,7 +17,7 @@ export default function Menu() {
         <h1 className="mt-3 text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl">
           Our Menu
         </h1>
-        <p className="mt-4 text-lg text-stone-600">
+        <p className="mt-4 text-base text-stone-600 sm:text-lg">
           Every cookie is hand-rolled and baked fresh each morning. Mix and
           match a dozen — or grab a box of your favorites.
         </p>

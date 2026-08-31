@@ -59,13 +59,13 @@ export default function About() {
         <h1 className="mt-3 text-4xl font-bold tracking-tight text-stone-900 sm:text-5xl">
           Baked with love since 2019
         </h1>
-        <p className="mt-6 text-lg leading-relaxed text-stone-600">
+        <p className="mt-6 text-base leading-relaxed text-stone-600 sm:text-lg">
           Crumb &amp; Co. started at a tiny farmers' market stall with one recipe
           and a big dream. Today we bake thousands of cookies a week — still by
           hand, still with the same recipe our founder's grandmother wrote on a
           stained index card.
         </p>
-        <p className="mt-4 text-lg leading-relaxed text-stone-600">
+        <p className="mt-4 text-base leading-relaxed text-stone-600 sm:text-lg">
           We believe a cookie should be more than just sweet. It should be
           warm, chewy in the middle, crisp at the edges, and made with
           ingredients we would proudly serve our own family.
@@ -130,7 +130,7 @@ export default function About() {
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl">
             What they say about our cookies
           </h2>
-          <p className="mt-4 text-lg text-stone-600">
+          <p className="mt-4 text-base text-stone-600 sm:text-lg">
             Don't take our word for it — here's what the people who eat them
             think.
           </p>
