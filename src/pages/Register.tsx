@@ -1,4 +1,4 @@
-import { type FormEvent } from "react"
+import { useState, type FormEvent } from "react"
 import { Link, useLocation, useNavigate } from "react-router"
 import { ArrowRight, UserPlus } from "lucide-react"
 import { useAuth } from "../context/AuthContext"
@@ -11,6 +11,7 @@ export default function Register() {
   const navigate = useNavigate()
   const location = useLocation()
   const from = (location.state as { from?: string } | null)?.from ?? "/menu"
+  const [created, setCreated] = useState(false)
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -19,7 +20,8 @@ export default function Register() {
       String(formData.get("name") ?? ""),
       String(formData.get("email") ?? ""),
     )
-    navigate(from, { replace: true })
+    setCreated(true)
+    window.setTimeout(() => navigate(from, { replace: true }), 1500)
   }
 
   return (
@@ -40,7 +42,7 @@ export default function Register() {
             </p>
           </div>
 
-          {from !== "/menu" && (
+          {created && (
             <div className="mt-6 flex items-center gap-2 rounded-2xl bg-emerald-50 px-5 py-4 text-sm font-medium text-emerald-700">
               <span className="h-2 w-2 rounded-full bg-emerald-500" />
               Account created! You'll be taken to checkout after signing in.
