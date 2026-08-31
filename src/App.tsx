@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router"
 import Layout from "./components/layout/Layout"
+import { ScrollToTop } from "./components/ScrollToTop"
 import { RequireAuth } from "./components/auth/RequireAuth"
 import { AuthProvider } from "./context/AuthProvider"
 import { CartProvider } from "./context/CartProvider"
@@ -20,6 +21,7 @@ function App() {
       <OrderProvider>
         <CartProvider>
           <BrowserRouter>
+            <ScrollToTop />
             <Routes>
               <Route element={<Layout />}>
                 <Route index element={<Home />} />
