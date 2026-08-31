@@ -2,20 +2,15 @@ import { useState } from "react"
 import { Link } from "react-router"
 import {
   ArrowRight,
-  CheckCircle2,
-  CircleDollarSign,
   PackageOpen,
-  Truck,
-  XCircle,
-  type LucideIcon,
 } from "lucide-react"
 import { useOrders, type OrderStatus } from "../context/OrderContext"
 
-const statusTabs: { value: OrderStatus; label: string; icon: LucideIcon }[] = [
-  { value: "unpaid", label: "Pending payment", icon: CircleDollarSign },
-  { value: "sent", label: "Sent", icon: Truck },
-  { value: "done", label: "Done", icon: CheckCircle2 },
-  { value: "canceled", label: "Canceled", icon: XCircle },
+const statusTabs: { value: OrderStatus; label: string }[] = [
+  { value: "unpaid", label: "Pending payment" },
+  { value: "sent", label: "Sent" },
+  { value: "done", label: "Done" },
+  { value: "canceled", label: "Canceled" },
 ]
 
 const statusLabels: Record<OrderStatus, string> = {
@@ -82,26 +77,22 @@ export default function Orders() {
     <section className="mx-auto max-w-6xl px-4 py-8 sm:px-8">
       <div className="md:flex md:gap-8">
         <aside className="hidden shrink-0 md:block md:w-64">
-          <div className="sticky top-24 flex min-h-[calc(100svh-8rem)] flex-col rounded-3xl border border-sidebar-border bg-sidebar p-5 text-sidebar-foreground shadow-sm">
-            <h2 className="px-1 font-logo text-2xl font-bold">Orders</h2>
+          <div className="sticky top-24 flex min-h-[calc(100svh-8rem)] flex-col rounded-3xl border border-sidebar-border bg-white p-5 text-sidebar-foreground shadow-sm">
+            <h2 className="px-3 font-logo text-xl font-bold">Orders</h2>
             <nav className="mt-4 space-y-1.5">
-              {statusTabs.map((tab) => {
-                const Icon = tab.icon
-                return (
-                  <button
-                    key={tab.value}
-                    type="button"
-                    onClick={() => setActive(tab.value)}
-                    className={navItemClasses(active === tab.value)}
-                  >
-                    <Icon className="h-4 w-4 shrink-0" />
-                    <span className="truncate">{tab.label}</span>
-                    <span className="ml-auto text-xs tabular-nums text-sidebar-foreground/50">
-                      {countFor(tab.value)}
-                    </span>
-                  </button>
-                )
-              })}
+              {statusTabs.map((tab) => (
+                <button
+                  key={tab.value}
+                  type="button"
+                  onClick={() => setActive(tab.value)}
+                  className={navItemClasses(active === tab.value)}
+                >
+                  <span className="truncate">{tab.label}</span>
+                  <span className="ml-auto text-xs tabular-nums text-sidebar-foreground/50">
+                    {countFor(tab.value)}
+                  </span>
+                </button>
+              ))}
             </nav>
           </div>
         </aside>
