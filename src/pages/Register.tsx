@@ -19,6 +19,7 @@ export default function Register() {
     register(
       String(formData.get("name") ?? ""),
       String(formData.get("email") ?? ""),
+      String(formData.get("password") ?? ""),
     )
     setCreated(true)
     window.setTimeout(() => navigate(from, { replace: true }), 1500)

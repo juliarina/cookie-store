@@ -12,6 +12,7 @@ import Login from "./pages/Login"
 import Menu from "./pages/Menu"
 import Orders from "./pages/Orders"
 import Register from "./pages/Register"
+import Settings from "./pages/Settings"
 
 function App() {
   return (
@@ -30,6 +31,14 @@ function App() {
                   element={
                     <RequireAuth>
                       <Orders />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="settings"
+                  element={
+                    <RequireAuth>
+                      <Settings />
                     </RequireAuth>
                   }
                 />

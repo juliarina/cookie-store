@@ -262,6 +262,12 @@ export default function Header() {
                   My Orders
                 </DropdownMenuItem>
                 <DropdownMenuItem
+                  onSelect={() => navigate("/settings")}
+                  className="px-2.5 py-2 text-stone-700 focus:bg-transparent focus:text-amber-600"
+                >
+                  Settings
+                </DropdownMenuItem>
+                <DropdownMenuItem
                   onSelect={handleLogout}
                   className="px-2.5 py-2 text-stone-700 focus:bg-transparent focus:text-amber-600"
                 >

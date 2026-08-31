@@ -3,12 +3,17 @@ import { createContext, useContext } from "react"
 export type User = {
   name: string
   email: string
+  phone?: string
+  city?: string
+  address?: string
 }
 
 export type AuthContextValue = {
   user: User | null
   login: (email: string, remember: boolean) => User | null
-  register: (name: string, email: string) => void
+  register: (name: string, email: string, password?: string) => void
+  updateProfile: (profile: Partial<User>) => void
+  updatePassword: (password: string) => void
   logout: () => void
 }
 

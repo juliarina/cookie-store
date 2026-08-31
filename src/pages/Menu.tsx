@@ -12,8 +12,18 @@ export default function Menu() {
   }
 
   return (
-    <section className="mx-auto max-w-7xl px-6 pt-0 pb-12 sm:px-10 lg:px-16">
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <section className="mx-auto max-w-7xl px-6 pt-10 pb-20 sm:px-10 lg:px-16">
+      <div className="mx-auto max-w-2xl text-center">
+        <h1 className="mt-3 text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl">
+          Our Menu
+        </h1>
+        <p className="mt-4 text-lg text-stone-600">
+          Every cookie is hand-rolled and baked fresh each morning. Mix and
+          match a dozen — or grab a box of your favorites.
+        </p>
+      </div>
+
+      <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {cookies.map((cookie) => {
           const inCart = cartQuantity(cookie.id)
           const outOfStock = cookie.stock === 0
