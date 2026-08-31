@@ -115,7 +115,7 @@ export default function Orders() {
 
           <div className="mt-5 md:mt-0">
             {filtered.length === 0 ? (
-              <div className="flex min-h-[calc(100svh-8rem)] flex-col items-center justify-center rounded-3xl border border-dashed border-stone-300 bg-white px-6 py-20 text-center">
+              <div className="flex min-h-[calc(100svh-8rem)] flex-col items-center justify-center rounded-3xl border border-stone-200 bg-white px-6 py-20 text-center shadow-sm">
                 <PackageOpen className="mx-auto h-14 w-14 text-stone-300" />
                 <h3 className="mt-5 text-xl font-bold text-stone-900">
                   {meta.emptyTitle}
