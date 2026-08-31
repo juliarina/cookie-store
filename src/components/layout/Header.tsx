@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react"
 import { Link, NavLink, useLocation, useNavigate } from "react-router"
-import { LogOut, Minus, Plus, ShoppingCart, Trash2, User } from "lucide-react"
+import { Minus, Plus, ShoppingCart, Trash2, User } from "lucide-react"
 import { RxCookie } from "react-icons/rx"
 import { useAuth } from "../../context/AuthContext"
 import { useCart } from "../../context/CartContext"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu"
 import {
   Sheet,
   SheetContent,
@@ -78,44 +85,6 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          {user ? (
-            <>
-              <span className="hidden items-center gap-2 lg:inline-flex">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-500 text-sm font-bold text-white">
-                  {user.name.charAt(0).toUpperCase()}
-                </span>
-                <span className="text-sm font-semibold text-stone-700">
-                  {user.name.split(" ")[0]}
-                </span>
-              </span>
-              <button
-                type="button"
-                onClick={handleLogout}
-                aria-label="Sign out"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full text-stone-700 transition hover:bg-stone-100"
-              >
-                <LogOut className="h-5 w-5" />
-              </button>
-            </>
-          ) : (
-            <>
-              <Link
-                to="/login"
-                className="hidden items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-700 transition-all duration-200 hover:scale-[1.03] hover:border-stone-400 hover:bg-stone-50 active:scale-[0.98] sm:inline-flex"
-              >
-                <User className="h-4 w-4" />
-                Sign in
-              </Link>
-              <Link
-                to="/login"
-                aria-label="Sign in"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full text-stone-700 transition hover:bg-stone-100 sm:hidden"
-              >
-                <User className="h-5 w-5" />
-              </Link>
-            </>
-          )}
-
           <Sheet open={cartOpen} onOpenChange={setCartOpen}>
             <SheetTrigger asChild>
               <button
@@ -266,6 +235,59 @@ export default function Header() {
               )}
             </SheetContent>
           </Sheet>
+
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  type="button"
+                  aria-label="Account menu"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full text-stone-700 transition-all duration-200 hover:scale-105 hover:bg-stone-100"
+                >
+                  <User className="h-5 w-5" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel className="flex flex-col items-center gap-1 px-2 py-3 text-center">
+                  <span className="text-sm font-semibold text-stone-900">
+                    {user.name}
+                  </span>
+                  <span className="text-xs font-normal text-stone-500">
+                    {user.email}
+                  </span>
+                </DropdownMenuLabel>
+                <DropdownMenuItem
+                  onSelect={() => navigate("/orders")}
+                  className="px-2.5 py-2 text-stone-700 focus:bg-transparent focus:text-amber-600"
+                >
+                  My Orders
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onSelect={handleLogout}
+                  className="px-2.5 py-2 text-stone-700 focus:bg-transparent focus:text-amber-600"
+                >
+                  Sign out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="hidden items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-700 transition-all duration-200 hover:scale-[1.03] hover:border-stone-400 hover:bg-stone-50 active:scale-[0.98] sm:inline-flex"
+              >
+                <User className="h-4 w-4" />
+                Sign in
+              </Link>
+              <Link
+                to="/login"
+                aria-label="Sign in"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full text-stone-700 transition hover:bg-stone-100 sm:hidden"
+              >
+                <User className="h-4 w-4" />
+              </Link>
+            </>
+          )}
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
