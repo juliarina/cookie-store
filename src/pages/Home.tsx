@@ -124,9 +124,6 @@ export default function Home() {
       <section className="mx-auto max-w-6xl px-4 py-24 sm:px-8 lg:px-12">
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <div>
-            <span className="text-xs font-semibold uppercase tracking-widest text-amber-600">
-              Fan favorites
-            </span>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl">
               Our best sellers
             </h2>
