@@ -127,9 +127,6 @@ export default function About() {
 
       <div className="mt-16">
         <div className="mx-auto max-w-2xl text-center">
-          <span className="text-xs font-semibold uppercase tracking-widest text-amber-600">
-            Kind words
-          </span>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl">
             What they say about our cookies
           </h2>
