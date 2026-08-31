@@ -83,7 +83,7 @@ export default function Home() {
             <br className="hidden sm:block" /> cookies.
           </h1>
 
-          <p className="mt-6 max-w-2xl animate-fade-up text-lg leading-relaxed text-stone-600 [animation-delay:200ms]">
+          <p className="mt-6 max-w-2xl animate-fade-up px-4 text-base leading-relaxed text-stone-600 [animation-delay:200ms] sm:px-8 sm:text-lg">
             Handcrafted cookies baked fresh each day with real butter, premium
             chocolate, and a whole lot of love. Warm, gooey, and made just for
             you.
@@ -121,7 +121,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-24 sm:px-8 lg:px-12">
+      <section className="mx-auto max-w-6xl px-6 py-24 sm:px-8 lg:px-12">
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <div>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl">
@@ -213,7 +213,7 @@ export default function Home() {
       </section>
 
       <section className="bg-stone-950 py-24 text-white">
-        <div className="mx-auto max-w-6xl px-4 sm:px-8 lg:px-12">
+        <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12">
           <div className="mx-auto max-w-2xl text-center">
             <span className="text-xs font-semibold uppercase tracking-widest text-amber-400">
               Why Crumb &amp; Co.

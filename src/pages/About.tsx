@@ -51,7 +51,7 @@ const testimonials = [
 
 export default function About() {
   return (
-    <section className="mx-auto max-w-6xl px-4 py-20 sm:px-8 lg:px-12">
+    <section className="mx-auto max-w-6xl px-6 py-20 sm:px-8 lg:px-12">
       <div className="mx-auto max-w-3xl text-center">
         <span className="text-xs font-semibold uppercase tracking-widest text-amber-600">
           Our Story

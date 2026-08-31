@@ -74,7 +74,7 @@ export default function Orders() {
   const meta = statusMeta[active]
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-8 sm:px-8">
+    <section className="mx-auto max-w-6xl px-6 py-8 sm:px-8">
       <div className="md:flex md:gap-8">
         <aside className="hidden shrink-0 md:block md:w-64">
           <div className="sticky top-24 flex min-h-[calc(100svh-8rem)] flex-col rounded-3xl border border-sidebar-border bg-white p-5 text-sidebar-foreground shadow-sm">

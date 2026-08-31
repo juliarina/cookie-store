@@ -45,7 +45,7 @@ export default function Settings() {
   }
 
   return (
-    <section className="mx-auto max-w-3xl px-4 pt-12 pb-20 sm:px-8">
+    <section className="mx-auto max-w-3xl px-6 pt-12 pb-20 sm:px-8">
       <div className="mx-auto max-w-2xl text-center">
         <h1 className="mt-3 text-2xl font-bold tracking-tight text-stone-900 sm:text-3xl">
           Settings

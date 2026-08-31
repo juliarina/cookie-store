@@ -43,7 +43,7 @@ export default function Checkout() {
 
   if (placed) {
     return (
-      <section className="mx-auto max-w-2xl px-4 py-24 text-center sm:px-8">
+      <section className="mx-auto max-w-2xl px-6 py-24 text-center sm:px-8">
         <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-emerald-100">
           <svg
             viewBox="0 0 24 24"
@@ -86,7 +86,7 @@ export default function Checkout() {
 
   if (items.length === 0) {
     return (
-      <section className="mx-auto max-w-2xl px-4 py-24 text-center sm:px-8">
+      <section className="mx-auto max-w-2xl px-6 py-24 text-center sm:px-8">
         <ShoppingCart className="mx-auto h-16 w-16 text-stone-300" />
         <h1 className="mt-6 text-3xl font-bold tracking-tight text-stone-900">
           Your cart is empty
@@ -106,7 +106,7 @@ export default function Checkout() {
   }
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-20 sm:px-8 lg:px-12">
+    <section className="mx-auto max-w-6xl px-6 py-20 sm:px-8 lg:px-12">
       <div className="mx-auto max-w-2xl text-center">
         <span className="text-xs font-semibold uppercase tracking-widest text-amber-600">
           Checkout
