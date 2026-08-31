@@ -1,17 +1,25 @@
 import { useState } from "react"
 import { Link } from "react-router"
-import { ArrowRight, PackageOpen } from "lucide-react"
+import {
+  ArrowRight,
+  CheckCircle2,
+  CircleDollarSign,
+  PackageOpen,
+  Truck,
+  XCircle,
+  type LucideIcon,
+} from "lucide-react"
 import { useOrders, type OrderStatus } from "../context/OrderContext"
 
-const statusTabs: { value: OrderStatus; label: string }[] = [
-  { value: "unpaid", label: "Not paid yet" },
-  { value: "sent", label: "Sent" },
-  { value: "done", label: "Done" },
-  { value: "canceled", label: "Canceled" },
+const statusTabs: { value: OrderStatus; label: string; icon: LucideIcon }[] = [
+  { value: "unpaid", label: "Pending payment", icon: CircleDollarSign },
+  { value: "sent", label: "Sent", icon: Truck },
+  { value: "done", label: "Done", icon: CheckCircle2 },
+  { value: "canceled", label: "Canceled", icon: XCircle },
 ]
 
 const statusLabels: Record<OrderStatus, string> = {
-  unpaid: "Not paid yet",
+  unpaid: "Pending payment",
   sent: "Sent",
   done: "Done",
   canceled: "Canceled",
@@ -43,11 +51,18 @@ const statusMeta: Record<
   },
 }
 
-const tabClasses = (active: boolean) =>
-  `rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 ${
+const pillClasses = (active: boolean) =>
+  `shrink-0 rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap transition-all duration-200 ${
     active
       ? "bg-stone-900 text-white shadow-sm"
-      : "text-stone-500 hover:bg-stone-100 hover:text-stone-900"
+      : "border border-stone-300 text-stone-500 hover:bg-stone-100 hover:text-stone-900"
+  }`
+
+const navItemClasses = (active: boolean) =>
+  `flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
+    active
+      ? "bg-sidebar-accent text-sidebar-accent-foreground"
+      : "text-sidebar-foreground/70 hover:bg-sidebar-accent/60 hover:text-sidebar-foreground"
   }`
 
 export default function Orders() {
@@ -58,140 +73,164 @@ export default function Orders() {
     .filter((order) => order.status === active)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
+  const countFor = (status: OrderStatus) =>
+    orders.filter((order) => order.status === status).length
+
   const meta = statusMeta[active]
 
   return (
-    <section className="mx-auto max-w-4xl px-4 py-20 sm:px-8">
-      <div className="text-center">
-        <span className="text-xs font-semibold uppercase tracking-widest text-amber-600">
-          Your orders
-        </span>
-        <h1 className="mt-3 text-4xl font-bold tracking-tight text-stone-900 sm:text-5xl">
-          Orders
-        </h1>
-        <p className="mt-4 text-lg text-stone-600">
-          Track your cookies from oven to doorstep.
-        </p>
-      </div>
-
-      <div className="mt-10 flex flex-wrap justify-center gap-2">
-        {statusTabs.map((tab) => (
-          <button
-            key={tab.value}
-            type="button"
-            onClick={() => setActive(tab.value)}
-            className={tabClasses(active === tab.value)}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-
-      <div className="mt-12">
-        {filtered.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-stone-300 bg-white px-6 py-20 text-center">
-            <PackageOpen className="mx-auto h-14 w-14 text-stone-300" />
-            <h3 className="mt-5 text-xl font-bold text-stone-900">
-              {meta.emptyTitle}
-            </h3>
-            <p className="mt-2 text-sm text-stone-500">{meta.emptyText}</p>
-            <Link
-              to="/menu"
-              className="group mt-6 inline-flex items-center gap-2 rounded-full bg-stone-900 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-stone-900/20 transition-all duration-200 hover:scale-[1.02] hover:bg-amber-500 active:scale-[0.98]"
-            >
-              Continue shopping
-              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
-            </Link>
-          </div>
-        ) : (
-          <ul className="space-y-6">
-            {filtered.map((order) => (
-              <li
-                key={order.id}
-                className="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm sm:p-8"
-              >
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div>
-                    <p className="font-mono text-sm font-bold text-stone-900">
-                      {order.id}
-                    </p>
-                    <p className="mt-1 text-xs text-stone-500">
-                      {new Date(order.date).toLocaleString()}
-                    </p>
-                  </div>
-                  <span
-                    className={`rounded-full px-3 py-1 text-xs font-semibold ${meta.badge}`}
+    <section className="mx-auto max-w-6xl px-4 py-8 sm:px-8">
+      <div className="md:flex md:gap-8">
+        <aside className="hidden shrink-0 md:block md:w-64">
+          <div className="sticky top-24 flex min-h-[calc(100svh-8rem)] flex-col rounded-3xl border border-sidebar-border bg-sidebar p-5 text-sidebar-foreground shadow-sm">
+            <h2 className="px-1 font-logo text-2xl font-bold">Orders</h2>
+            <nav className="mt-4 space-y-1.5">
+              {statusTabs.map((tab) => {
+                const Icon = tab.icon
+                return (
+                  <button
+                    key={tab.value}
+                    type="button"
+                    onClick={() => setActive(tab.value)}
+                    className={navItemClasses(active === tab.value)}
                   >
-                    {statusLabels[order.status]}
-                  </span>
-                </div>
+                    <Icon className="h-4 w-4 shrink-0" />
+                    <span className="truncate">{tab.label}</span>
+                    <span className="ml-auto text-xs tabular-nums text-sidebar-foreground/50">
+                      {countFor(tab.value)}
+                    </span>
+                  </button>
+                )
+              })}
+            </nav>
+          </div>
+        </aside>
 
-                <ul className="mt-6 divide-y divide-stone-100">
-                  {order.items.map((item) => (
-                    <li
-                      key={item.cookie.id}
-                      className="flex items-center justify-between py-3 text-sm"
-                    >
-                      <span className="text-stone-900">
-                        <span className="font-semibold">{item.cookie.name}</span>
-                        <span className="text-stone-400">
-                          {" "}
-                          × {item.quantity}
-                        </span>
+        <div className="min-w-0 flex-1">
+          <div className="md:hidden">
+            <div className="mx-[-1rem] flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-[-2rem] sm:px-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {statusTabs.map((tab) => (
+                <button
+                  key={tab.value}
+                  type="button"
+                  onClick={() => setActive(tab.value)}
+                  className={pillClasses(active === tab.value)}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-5 md:mt-0">
+            {filtered.length === 0 ? (
+              <div className="flex min-h-[calc(100svh-8rem)] flex-col items-center justify-center rounded-3xl border border-dashed border-stone-300 bg-white px-6 py-20 text-center">
+                <PackageOpen className="mx-auto h-14 w-14 text-stone-300" />
+                <h3 className="mt-5 text-xl font-bold text-stone-900">
+                  {meta.emptyTitle}
+                </h3>
+                <p className="mt-2 text-sm text-stone-500">{meta.emptyText}</p>
+                <Link
+                  to="/menu"
+                  className="group mt-6 inline-flex items-center gap-2 rounded-full bg-stone-900 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-stone-900/20 transition-all duration-200 hover:scale-[1.02] hover:bg-amber-500 active:scale-[0.98]"
+                >
+                  Continue shopping
+                  <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                </Link>
+              </div>
+            ) : (
+              <ul className="space-y-6">
+                {filtered.map((order) => (
+                  <li
+                    key={order.id}
+                    className="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm sm:p-8"
+                  >
+                    <div className="flex flex-wrap items-start justify-between gap-4">
+                      <div>
+                        <p className="font-mono text-sm font-bold text-stone-900">
+                          {order.id}
+                        </p>
+                        <p className="mt-1 text-xs text-stone-500">
+                          {new Date(order.date).toLocaleString()}
+                        </p>
+                      </div>
+                      <span
+                        className={`rounded-full px-3 py-1 text-xs font-semibold ${meta.badge}`}
+                      >
+                        {statusLabels[order.status]}
                       </span>
-                      <span className="font-semibold text-stone-900">
-                        ${(item.cookie.price * item.quantity).toFixed(2)}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                    </div>
 
-                <div className="mt-4 flex flex-wrap items-end justify-between gap-4 border-t border-stone-100 pt-5">
-                  <div className="text-sm text-stone-500">
-                    <p className="font-medium text-stone-700">
-                      {order.delivery.name} · {order.delivery.city}
-                    </p>
-                    <p className="mt-0.5">{order.delivery.address}</p>
-                  </div>
-                  <p className="text-lg font-extrabold text-stone-900">
-                    ${order.total.toFixed(2)}
-                  </p>
-                </div>
+                    <ul className="mt-6 divide-y divide-stone-100">
+                      {order.items.map((item) => (
+                        <li
+                          key={item.cookie.id}
+                          className="flex items-center justify-between py-3 text-sm"
+                        >
+                          <span className="text-stone-900">
+                            <span className="font-semibold">
+                              {item.cookie.name}
+                            </span>
+                            <span className="text-stone-400">
+                              {" "}
+                              × {item.quantity}
+                            </span>
+                          </span>
+                          <span className="font-semibold text-stone-900">
+                            ${(item.cookie.price * item.quantity).toFixed(2)}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
 
-                {order.status === "unpaid" && (
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setOrderStatus(order.id, "sent")}
-                      className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-emerald-500"
-                    >
-                      Mark as sent
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setOrderStatus(order.id, "canceled")}
-                      className="inline-flex items-center gap-2 rounded-full border border-red-200 bg-white px-5 py-2.5 text-sm font-semibold text-red-600 transition-all duration-200 hover:scale-[1.02] hover:bg-red-50"
-                    >
-                      Cancel order
-                    </button>
-                  </div>
-                )}
+                    <div className="mt-4 flex flex-wrap items-end justify-between gap-4 border-t border-stone-100 pt-5">
+                      <div className="text-sm text-stone-500">
+                        <p className="font-medium text-stone-700">
+                          {order.delivery.name} · {order.delivery.city}
+                        </p>
+                        <p className="mt-0.5">{order.delivery.address}</p>
+                      </div>
+                      <p className="text-lg font-extrabold text-stone-900">
+                        ${order.total.toFixed(2)}
+                      </p>
+                    </div>
 
-                {order.status === "sent" && (
-                  <div className="mt-5">
-                    <button
-                      type="button"
-                      onClick={() => setOrderStatus(order.id, "done")}
-                      className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-emerald-500"
-                    >
-                      Mark as done
-                    </button>
-                  </div>
-                )}
-              </li>
-            ))}
-          </ul>
-        )}
+                    {order.status === "unpaid" && (
+                      <div className="mt-5 flex flex-wrap gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setOrderStatus(order.id, "sent")}
+                          className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-emerald-500"
+                        >
+                          Mark as sent
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setOrderStatus(order.id, "canceled")}
+                          className="inline-flex items-center gap-2 rounded-full border border-red-200 bg-white px-5 py-2.5 text-sm font-semibold text-red-600 transition-all duration-200 hover:scale-[1.02] hover:bg-red-50"
+                        >
+                          Cancel order
+                        </button>
+                      </div>
+                    )}
+
+                    {order.status === "sent" && (
+                      <div className="mt-5">
+                        <button
+                          type="button"
+                          onClick={() => setOrderStatus(order.id, "done")}
+                          className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-emerald-500"
+                        >
+                          Mark as done
+                        </button>
+                      </div>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
       </div>
     </section>
   )
