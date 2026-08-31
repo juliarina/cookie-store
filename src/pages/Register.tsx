@@ -1,7 +1,6 @@
 import { type FormEvent } from "react"
 import { Link, useLocation, useNavigate } from "react-router"
 import { ArrowRight, UserPlus } from "lucide-react"
-import { RxCookie } from "react-icons/rx"
 import { useAuth } from "../context/AuthContext"
 
 const inputClasses =
@@ -33,7 +32,6 @@ export default function Register() {
       <div className="relative w-full max-w-md">
         <div className="rounded-3xl border border-stone-200 bg-white p-8 shadow-xl shadow-stone-900/5 sm:p-10">
           <div className="flex flex-col items-center text-center">
-            <RxCookie className="h-16 w-16" />
             <h1 className="mt-4 text-2xl font-bold tracking-tight text-stone-900">
               Create your account
             </h1>
