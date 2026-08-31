@@ -24,7 +24,6 @@ import {
 const navItems = [
   { to: "/", label: "Home", end: true },
   { to: "/menu", label: "Menu", end: false },
-  { to: "/orders", label: "Orders", end: false },
   { to: "/about", label: "About", end: false },
   { to: "/contact", label: "Contact", end: false },
 ]
