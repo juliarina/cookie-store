@@ -2,9 +2,9 @@ import { ArrowUpRight, Star } from "lucide-react"
 import { Link } from "react-router"
 
 const milestones = [
-  { value: "2019", label: "Founded at a farmers' market" },
-  { value: "10k+", label: "Cookies baked per week" },
   { value: "15+", label: "Signature flavors" },
+  { value: "10k+", label: "Cookies baked per week" },
+  { value: "4.9★", label: "Average rating" },
 ]
 
 const testimonials = [
@@ -51,9 +51,12 @@ export default function About() {
         </p>
       </div>
 
-      <div className="mt-16 grid gap-4 rounded-3xl border border-stone-200 bg-gradient-to-br from-amber-50 to-orange-50 p-10 sm:grid-cols-3 sm:p-12">
+      <div className="mx-auto mt-30 mb-10 grid max-w-xl gap-1 sm:grid-cols-3">
         {milestones.map((milestone) => (
-          <div key={milestone.label} className="text-center sm:text-left">
+          <div
+            key={milestone.label}
+            className="mx-auto w-full max-w-40 text-center"
+          >
             <p className="text-4xl font-bold tracking-tight text-stone-900">
               {milestone.value}
             </p>
@@ -64,9 +67,9 @@ export default function About() {
         ))}
       </div>
 
-      <div className="mt-16">
+      <div className="mt-24">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl">
+          <h2 className="mt-30 text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl">
             What they say about our cookies
           </h2>
           <p className="mt-4 text-base text-stone-600 sm:text-lg">
