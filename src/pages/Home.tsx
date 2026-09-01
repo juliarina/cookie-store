@@ -56,12 +56,6 @@ const bestSellers = [
   cookies.find((cookie) => cookie.id === "salted-caramel"),
 ].filter((cookie) => cookie !== undefined)
 
-const stats = [
-  { value: "15+", label: "Cookie flavors" },
-  { value: "4.9★", label: "Average rating" },
-  { value: "10k+", label: "Cookies sold" },
-]
-
 export default function Home() {
   const { items, addToCart } = useCart()
 
@@ -104,20 +98,6 @@ export default function Home() {
               Our Story
             </Link>
           </div>
-
-          <dl className="mt-12 grid animate-fade-up grid-cols-3 gap-10 [animation-delay:400ms]">
-            {stats.map((stat) => (
-              <div key={stat.label}>
-                <dt className="sr-only">{stat.label}</dt>
-                <dd className="text-2xl font-bold tracking-tight text-stone-900 sm:text-3xl">
-                  {stat.value}
-                </dd>
-                <dd className="mt-1 text-xs font-medium uppercase tracking-wider text-stone-500 sm:text-sm">
-                  {stat.label}
-                </dd>
-              </div>
-            ))}
-          </dl>
         </div>
       </section>
 
