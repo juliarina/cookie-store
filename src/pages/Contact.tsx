@@ -34,7 +34,7 @@ export default function Contact() {
   }
 
   return (
-    <section className="mx-auto max-w-6xl px-6 py-20 sm:px-8 lg:px-12">
+    <section className="mx-auto max-w-6xl px-6 pt-14 pb-20 sm:px-8 lg:px-12">
       <div className="mx-auto max-w-2xl text-center">
         <span className="text-xs font-semibold uppercase tracking-widest text-amber-600">
           Get in Touch

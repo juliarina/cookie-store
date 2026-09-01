@@ -4,6 +4,7 @@ import { Minus, Plus, ShoppingCart, Trash2, User } from "lucide-react"
 import { RxCookie } from "react-icons/rx"
 import { useAuth } from "../../context/AuthContext"
 import { useCart } from "../../context/CartContext"
+import cookieImage from "../../assets/cookie.webp"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,8 +40,6 @@ const sheetLinkClasses = ({ isActive }: { isActive: boolean }) =>
   `text-base font-medium transition-colors duration-200 ${
     isActive ? "text-amber-600" : "text-stone-900 hover:text-stone-900"
   }`
-
-const DELIVERY_FEE = 5
 
 export default function Header() {
   const [open, setOpen] = useState(false)
@@ -100,9 +99,9 @@ export default function Header() {
               </button>
             </SheetTrigger>
 
-            <SheetContent side="right" className="max-w-sm">
+            <SheetContent side="right" className="w-[100vw] data-[side=right]:w-[100vw] max-w-sm">
               <SheetHeader>
-                <SheetTitle className="text-sm font-semibold tracking-widest text-stone-500">
+                <SheetTitle className="text-sm font-semibold text-stone-500">
                   Your cart
                 </SheetTitle>
                 <SheetDescription>
@@ -129,15 +128,17 @@ export default function Header() {
                 </div>
               ) : (
                 <>
-                  <ul className="flex-1 divide-y divide-stone-100 overflow-y-auto px-5 py-2">
+                  <ul className="-mt-2 flex-1 divide-y divide-stone-100 overflow-y-auto px-5 pb-2">
                     {items.map((item) => (
                       <li
                         key={item.cookie.id}
                         className="flex items-start gap-3 py-4"
                       >
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-amber-50">
-                          <RxCookie className="h-8 w-8 text-amber-500" />
-                        </div>
+                        <img
+                          src={cookieImage}
+                          alt={item.cookie.name}
+                          className="h-12 w-12 shrink-0 rounded-2xl object-cover"
+                        />
                         <div className="min-w-0 flex-1">
                           <p className="truncate text-sm font-semibold text-stone-900">
                             {item.cookie.name}
@@ -199,23 +200,11 @@ export default function Header() {
                   </ul>
 
                   <SheetFooter className="border-t border-stone-100 bg-stone-50/80">
-                    <dl className="w-full space-y-2 text-sm">
-                      <div className="flex items-center justify-between text-stone-600">
-                        <dt>Subtotal</dt>
-                        <dd className="font-semibold text-stone-900">
-                          ${totalPrice.toFixed(2)}
-                        </dd>
-                      </div>
-                      <div className="flex items-center justify-between text-stone-600">
-                        <dt>Delivery</dt>
-                        <dd className="font-semibold text-stone-900">
-                          ${DELIVERY_FEE.toFixed(2)}
-                        </dd>
-                      </div>
-                      <div className="flex items-center justify-between border-t border-stone-200 pt-2 text-base">
+                    <dl className="w-full text-sm">
+                      <div className="flex items-center justify-between px-2 text-base">
                         <dt className="font-semibold text-stone-900">Total</dt>
-                        <dd className="text-lg font-extrabold text-stone-900">
-                          ${(totalPrice + DELIVERY_FEE).toFixed(2)}
+                        <dd className="font-extrabold text-stone-900">
+                          ${totalPrice.toFixed(2)}
                         </dd>
                       </div>
                     </dl>
@@ -225,7 +214,7 @@ export default function Header() {
                         setCartOpen(false)
                         navigate("/checkout")
                       }}
-                      className="w-full rounded-full bg-stone-900 py-3 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.01] hover:bg-amber-500"
+                      className="mt-2 w-full rounded-full bg-stone-900 py-3 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.01] hover:bg-amber-500"
                     >
                       Proceed to Checkout
                     </button>
