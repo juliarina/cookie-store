@@ -234,13 +234,13 @@ export default function Home() {
                 alt="Real ingredients, nothing else"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="relative flex h-full flex-col p-8">
-                <div className="h-28 shrink-0" />
+              <div className="relative flex h-full flex-col p-6 md:p-8">
+                <div className="h-16 shrink-0 md:h-28" />
                 <div className="mt-auto">
-                  <h3 className="text-2xl font-semibold tracking-tight">
+                  <h3 className="text-lg font-semibold tracking-tight md:text-2xl">
                     Real ingredients, nothing else
                   </h3>
-                  <p className="mt-3 max-w-md text-stone-300">
+                  <p className="mt-2 text-sm leading-relaxed text-stone-300 md:mt-3 md:max-w-md">
                     Real butter, farm-fresh eggs, and single-origin chocolate.
                     No mixes, no preservatives — just the way grandma baked it.
                   </p>
@@ -298,7 +298,7 @@ export default function Home() {
               </div>
               <Link
                 to="/contact"
-                className="group/btn inline-flex shrink-0 items-center gap-1.5 rounded-full bg-white px-6 py-3 text-sm font-semibold text-stone-950 transition-all duration-200 hover:scale-[1.03] hover:bg-amber-400 active:scale-[0.98]"
+                className="group/btn inline-flex w-full shrink-0 items-center justify-center gap-1.5 rounded-full bg-white px-6 py-3 text-sm font-semibold text-stone-950 transition-all duration-200 hover:scale-[1.03] hover:bg-amber-400 active:scale-[0.98] sm:w-auto"
               >
                 Order a box
                 <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />

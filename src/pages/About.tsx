@@ -52,20 +52,20 @@ const testimonials = [
 export default function About() {
   return (
     <section className="mx-auto max-w-6xl px-6 pt-14 pb-20 sm:px-8 lg:px-12">
-      <div className="mx-auto max-w-3xl text-center">
+      <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
         <span className="text-xs font-semibold uppercase tracking-widest text-amber-600">
           Our Story
         </span>
         <h1 className="mt-3 text-4xl font-bold tracking-tight text-stone-900 sm:text-5xl">
           Baked with love since 2019
         </h1>
-        <p className="mt-6 text-base leading-relaxed text-stone-600 sm:text-lg">
+        <p className="mt-8 text-justify text-base leading-relaxed text-stone-600 sm:text-center sm:text-lg">
           Crumb &amp; Co. started at a tiny farmers' market stall with one recipe
           and a big dream. Today we bake thousands of cookies a week — still by
           hand, still with the same recipe our founder's grandmother wrote on a
           stained index card.
         </p>
-        <p className="mt-4 text-base leading-relaxed text-stone-600 sm:text-lg">
+        <p className="mt-4 text-justify text-base leading-relaxed text-stone-600 sm:text-center sm:text-lg">
           We believe a cookie should be more than just sweet. It should be
           warm, chewy in the middle, crisp at the edges, and made with
           ingredients we would proudly serve our own family.
