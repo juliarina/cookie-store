@@ -92,7 +92,10 @@ export default function Header() {
               >
                 <ShoppingCart className="h-5 w-5" />
                 {totalCount > 0 && (
-                  <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-500 px-1 text-[11px] font-bold text-white shadow-sm">
+                  <span
+                    key={totalCount}
+                    className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 animate-bump items-center justify-center rounded-full bg-amber-500 px-1 text-[11px] font-bold text-white shadow-sm"
+                  >
                     {totalCount}
                   </span>
                 )}

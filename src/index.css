@@ -59,6 +59,7 @@ html {
   --animate-float: float 7s ease-in-out infinite;
   --animate-glow: glow 6s ease-in-out infinite;
   --animate-spin-slow: spin 24s linear infinite;
+  --animate-bump: bump 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @keyframes fade-up {
@@ -91,6 +92,16 @@ html {
   50% {
     opacity: 0.8;
     transform: scale(1.08);
+  }
+}
+
+@keyframes bump {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.45);
   }
 }
 

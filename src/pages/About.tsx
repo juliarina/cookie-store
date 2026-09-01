@@ -1,10 +1,11 @@
 import { ArrowUpRight, Star } from "lucide-react"
 import { Link } from "react-router"
+import CountUp from "../components/CountUp"
 
 const milestones = [
-  { value: "15+", label: "Signature flavors" },
-  { value: "10k+", label: "Cookies baked per week" },
-  { value: "4.9★", label: "Average rating" },
+  { value: 15, suffix: "+", decimals: 0, label: "Signature flavors" },
+  { value: 10, suffix: "k+", decimals: 0, label: "Cookies baked per week" },
+  { value: 4.9, suffix: "★", decimals: 1, label: "Average rating" },
 ]
 
 const testimonials = [
@@ -58,7 +59,11 @@ export default function About() {
             className="mx-auto w-full max-w-40 text-center"
           >
             <p className="text-4xl font-bold tracking-tight text-stone-900">
-              {milestone.value}
+              <CountUp
+                value={milestone.value}
+                decimals={milestone.decimals}
+              />
+              {milestone.suffix}
             </p>
             <p className="mt-2 text-sm font-medium text-stone-500">
               {milestone.label}
