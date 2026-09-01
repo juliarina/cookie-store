@@ -1,26 +1,5 @@
-import { ArrowUpRight, Cookie, Flame, Heart, Star } from "lucide-react"
+import { ArrowUpRight, Star } from "lucide-react"
 import { Link } from "react-router"
-
-const values = [
-  {
-    icon: Heart,
-    title: "Real ingredients",
-    description:
-      "Real butter, farm-fresh eggs, and single-origin chocolate. Nothing artificial, ever.",
-  },
-  {
-    icon: Flame,
-    title: "Baked fresh daily",
-    description:
-      "We mix, bake, and sell the same day. If it's not fresh, it's not on our shelf.",
-  },
-  {
-    icon: Cookie,
-    title: "Small-batch care",
-    description:
-      "Each batch is made by hand in small quantities so every cookie gets attention.",
-  },
-]
 
 const milestones = [
   { value: "2019", label: "Founded at a farmers' market" },
@@ -72,47 +51,7 @@ export default function About() {
         </p>
       </div>
 
-      <div className="mt-16 grid gap-4 md:grid-cols-3">
-        {values.map((value, index) => {
-          const Icon = value.icon
-          return (
-            <article
-              key={value.title}
-              className={`group flex flex-col rounded-3xl border p-8 transition-all duration-300 hover:-translate-y-1 ${
-                index === 1
-                  ? "border-stone-900 bg-stone-900 text-white hover:shadow-2xl hover:shadow-stone-900/20"
-                  : "border-stone-200 bg-white hover:border-amber-200 hover:shadow-xl hover:shadow-amber-900/10"
-              }`}
-            >
-              <div
-                className={`flex h-12 w-12 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110 ${
-                  index === 1
-                    ? "bg-amber-500 text-white"
-                    : "bg-amber-100 text-amber-600"
-                }`}
-              >
-                <Icon className="h-6 w-6" />
-              </div>
-              <h2
-                className={`mt-6 text-xl font-semibold tracking-tight ${
-                  index === 1 ? "text-white" : "text-stone-900"
-                }`}
-              >
-                {value.title}
-              </h2>
-              <p
-                className={`mt-2 text-sm leading-relaxed ${
-                  index === 1 ? "text-stone-400" : "text-stone-500"
-                }`}
-              >
-                {value.description}
-              </p>
-            </article>
-          )
-        })}
-      </div>
-
-      <div className="mt-4 grid gap-4 rounded-3xl border border-stone-200 bg-gradient-to-br from-amber-50 to-orange-50 p-10 sm:grid-cols-3 sm:p-12">
+      <div className="mt-16 grid gap-4 rounded-3xl border border-stone-200 bg-gradient-to-br from-amber-50 to-orange-50 p-10 sm:grid-cols-3 sm:p-12">
         {milestones.map((milestone) => (
           <div key={milestone.label} className="text-center sm:text-left">
             <p className="text-4xl font-bold tracking-tight text-stone-900">
