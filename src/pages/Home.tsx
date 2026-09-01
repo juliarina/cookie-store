@@ -117,7 +117,7 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {bestSellers.map((cookie) => {
             const inCart =
               items.find((item) => item.cookie.id === cookie.id)?.quantity ?? 0
