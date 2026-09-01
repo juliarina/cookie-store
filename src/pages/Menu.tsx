@@ -23,7 +23,7 @@ export default function Menu() {
         </p>
       </div>
 
-      <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="mt-14 grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4">
         {cookies.map((cookie) => {
           const inCart = cartQuantity(cookie.id)
           const outOfStock = cookie.stock === 0
@@ -36,14 +36,14 @@ export default function Menu() {
               key={cookie.id}
               className="group relative flex flex-col overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-amber-200 hover:shadow-xl hover:shadow-amber-900/10"
             >
-              <div className="relative flex min-h-60 items-center justify-center overflow-hidden bg-gradient-to-b from-amber-50 to-white px-8 pb-4 pt-10">
+              <div className="relative flex items-center justify-center overflow-hidden bg-gradient-to-b from-amber-50 to-white px-4 pb-3 pt-6 sm:min-h-56 sm:px-8 sm:pb-4 sm:pt-10">
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="h-44 w-44 rounded-full bg-amber-200/40 blur-2xl transition-transform duration-500 group-hover:scale-125" />
+                  <div className="h-[22vw] w-[22vw] rounded-full bg-amber-200/40 blur-2xl transition-transform duration-500 group-hover:scale-125 sm:h-36 sm:w-36 lg:h-44 lg:w-44" />
                 </div>
                 <img
                     src={cookieImage}
                     alt={cookie.name}
-                    className="relative h-48 w-48 object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                    className="relative h-[20vw] w-[20vw] object-cover transition-transform duration-500 ease-out group-hover:scale-110 sm:h-40 sm:w-40 lg:h-48 lg:w-48"
                   />
                 <div className="absolute left-4 top-4 flex flex-col items-start gap-1.5">
                   {outOfStock && (
@@ -65,21 +65,21 @@ export default function Menu() {
               </div>
 
               <div className="flex flex-1 flex-col p-6 pt-2">
-                <h2 className="text-base font-semibold tracking-tight text-stone-900">
+                <h2 className="truncate text-base font-semibold tracking-tight text-stone-900">
                   {cookie.name}
                 </h2>
                 <div className="mt-1.5 flex items-center gap-1.5">
                   <RatingStars rating={cookie.rating} />
                 </div>
-                <div className="mt-5 flex items-center justify-between gap-3">
-                  <span className="text-lg font-bold text-amber-600">
+                <div className="mt-auto flex flex-col items-stretch gap-3 pt-3 sm:flex-row sm:items-center sm:justify-between">
+                  <span className="text-base font-bold text-amber-600 sm:text-xl">
                     ${cookie.price.toFixed(2)}
                   </span>
                   <button
                     type="button"
                     disabled={outOfStock || atLimit}
                     onClick={() => addToCart(cookie)}
-                    className="inline-flex items-center gap-1.5 rounded-full bg-stone-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:scale-[1.04] hover:bg-amber-500 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-stone-200 disabled:text-stone-400 disabled:hover:scale-100"
+                    className="inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-stone-900 px-3 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:scale-[1.04] hover:bg-amber-500 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-stone-200 disabled:text-stone-400 disabled:hover:scale-100 sm:w-auto sm:px-4"
                   >
                     {outOfStock ? (
                       "Out of Stock"
@@ -87,7 +87,7 @@ export default function Menu() {
                       "Max in Cart"
                     ) : (
                       <>
-                        <Plus className="h-4 w-4" />
+                        <Plus className="hidden h-4 w-4 sm:block" />
                         Add
                       </>
                     )}
