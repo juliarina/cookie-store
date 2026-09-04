@@ -31,7 +31,7 @@ const testimonials = [
 
 export default function About() {
   return (
-    <section className="mx-auto max-w-6xl px-6 pt-14 pb-20 sm:px-8 lg:px-12">
+    <section className="mx-auto max-w-6xl px-6 pt-20 pb-20 sm:px-8 lg:px-12">
       <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
         <span className="text-xs font-semibold uppercase tracking-widest text-amber-600">
           Our Story
@@ -52,24 +52,28 @@ export default function About() {
         </p>
       </div>
 
-      <div className="mx-auto mt-30 mb-10 grid max-w-xl gap-1 sm:grid-cols-3">
-        {milestones.map((milestone) => (
-          <div
-            key={milestone.label}
-            className="mx-auto w-full max-w-40 text-center"
-          >
-            <p className="text-4xl font-bold tracking-tight text-stone-900">
-              <CountUp
-                value={milestone.value}
-                decimals={milestone.decimals}
-              />
-              {milestone.suffix}
-            </p>
-            <p className="mt-2 text-sm font-medium text-stone-500">
-              {milestone.label}
-            </p>
+      <div className="relative left-1/2 mt-16 -translate-x-1/2 w-screen bg-stone-950 py-20">
+        <div className="mx-auto max-w-2xl px-6 sm:px-8">
+          <div className="grid gap-14 sm:grid-cols-3 sm:gap-1">
+            {milestones.map((milestone) => (
+              <div
+                key={milestone.label}
+                className="mx-auto w-full max-w-40 text-center"
+              >
+                <p className="text-4xl font-bold tracking-tight text-white">
+                  <CountUp
+                    value={milestone.value}
+                    decimals={milestone.decimals}
+                  />
+                  {milestone.suffix}
+                </p>
+                <p className="mt-2 text-sm font-medium text-stone-400">
+                  {milestone.label}
+                </p>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
 
       <div className="mt-24">
