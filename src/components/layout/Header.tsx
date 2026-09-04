@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
 import { Link, NavLink, useLocation, useNavigate } from "react-router"
-import { Minus, Plus, ShoppingCart, Trash2, User } from "lucide-react"
+import { Minus, Plus, Trash2 } from "lucide-react"
+import { FiUser } from "react-icons/fi"
+import { HiOutlineShoppingBag } from "react-icons/hi2";
+import { LuMenu } from "react-icons/lu"
 import { RxCookie } from "react-icons/rx"
 import { useAuth } from "../../context/AuthContext"
 import { useCart } from "../../context/CartContext"
@@ -63,16 +66,47 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-stone-200/80 bg-white/75 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-8 lg:px-12">
-        <Link
-          to="/"
-          className="group flex items-center gap-2"
-          onClick={() => setOpen(false)}
-        >
-          <RxCookie className="h-8 w-8 text-amber-500 transition-transform duration-300 group-hover:rotate-12" />
-          <span className="font-logo text-xl font-bold tracking-tight text-stone-900">
-            Crumb & Co.
-          </span>
-        </Link>
+        <div className="flex items-center gap-1">
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+              <button
+                type="button"
+                aria-label="Toggle menu"
+                className="inline-flex h-10 pr-3 items-center justify-start rounded-full text-stone-700 transition hover:bg-stone-100 md:hidden"
+              >
+                <LuMenu className="h-7 w-7" style={{ strokeWidth: 1.8}} />
+              </button>
+            </SheetTrigger>
+            <SheetContent side="left" className="md:hidden max-w-80">
+              <nav className="pl-6 pt-8">
+                <ul className="flex flex-col gap-4">
+                  {navItems.map((item) => (
+                    <li key={item.to}>
+                      <NavLink
+                        to={item.to}
+                        end={item.end}
+                        className={sheetLinkClasses}
+                        onClick={() => setOpen(false)}
+                      >
+                        {item.label}
+                      </NavLink>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </SheetContent>
+          </Sheet>
+          <Link
+            to="/"
+            className="group flex items-center gap-2"
+            onClick={() => setOpen(false)}
+          >
+            <RxCookie className="h-8 w-8 text-amber-500 transition-transform duration-300 group-hover:rotate-12" />
+            <span className="font-logo text-xl font-bold tracking-tight text-stone-900">
+              Crumb & Co.
+            </span>
+          </Link>
+        </div>
 
         <nav className="hidden items-center gap-3 md:flex">
           {navItems.map((item) => (
@@ -82,7 +116,7 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           <Sheet open={cartOpen} onOpenChange={setCartOpen}>
             <SheetTrigger asChild>
               <button
@@ -90,11 +124,11 @@ export default function Header() {
                 aria-label={`Open cart, ${totalCount} items`}
                 className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-stone-700 transition-all duration-200 hover:scale-105 hover:bg-stone-100"
               >
-                <ShoppingCart className="h-5 w-5" />
+                <HiOutlineShoppingBag className="h-7 w-7 sm:h-6 sm:w-6" />
                 {totalCount > 0 && (
                   <span
                     key={totalCount}
-                    className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 animate-bump items-center justify-center rounded-full bg-amber-500 px-1 text-[11px] font-bold text-white shadow-sm"
+                    className="absolute right-0 top-0.5 flex h-4 min-w-4 animate-bump items-center justify-center rounded-full bg-amber-500 px-0.5 text-[10px] font-bold text-white shadow-sm"
                   >
                     {totalCount}
                   </span>
@@ -114,7 +148,7 @@ export default function Header() {
 
               {items.length === 0 ? (
                 <div className="flex flex-1 flex-col items-center justify-center px-6 py-16 text-center">
-                  <ShoppingCart className="h-12 w-12 text-stone-300" />
+                  <HiOutlineShoppingBag className="h-12 w-12 text-stone-300" />
                   <p className="mt-4 text-sm font-medium text-stone-600">
                     Your cart is empty
                   </p>
@@ -235,7 +269,9 @@ export default function Header() {
                   aria-label="Account menu"
                   className="inline-flex h-10 w-10 items-center justify-center rounded-full text-stone-700 transition-all duration-200 hover:scale-105 hover:bg-stone-100"
                 >
-                  <User className="h-5 w-5" />
+<span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-stone-900 text-xs font-semibold text-white transition-all duration-200 hover:scale-105 hover:bg-stone-800">
+                    {user.name.charAt(0).toUpperCase()}
+                  </span>
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
@@ -271,59 +307,19 @@ export default function Header() {
             <>
               <Link
                 to="/login"
-                className="hidden items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-700 transition-all duration-200 hover:scale-[1.03] hover:border-stone-400 hover:bg-stone-50 active:scale-[0.98] sm:inline-flex"
+                aria-label="Sign in"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full text-stone-700 transition-all duration-200 hover:scale-105 hover:bg-stone-100 sm:hidden"
               >
-                <User className="h-4 w-4" />
-                Sign in
+                <FiUser className="h-7 w-7" style={{ strokeWidth: 1.7 }} />
               </Link>
               <Link
                 to="/login"
-                aria-label="Sign in"
-                className="inline-flex h-8 w-8 items-center justify-center rounded-full text-stone-700 transition hover:bg-stone-100 sm:hidden"
+                className="hidden items-center rounded-full border border-stone-900 bg-stone-900 px-4 py-2 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.03] hover:bg-stone-800 active:scale-[0.98] sm:inline-flex"
               >
-                <User className="h-4 w-4" />
+                Sign in
               </Link>
             </>
           )}
-
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-              <button
-                type="button"
-                aria-label="Toggle menu"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full text-stone-700 transition hover:bg-stone-100 md:hidden"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  className="h-6 w-6"
-                >
-                  <path d="M4 7h16M4 12h16M4 17h16" />
-                </svg>
-              </button>
-            </SheetTrigger>
-            <SheetContent side="right" className="md:hidden max-w-80">
-              <nav className="pl-6 pt-8">
-                <ul className="flex flex-col gap-4">
-                  {navItems.map((item) => (
-                    <li key={item.to}>
-                      <NavLink
-                        to={item.to}
-                        end={item.end}
-                        className={sheetLinkClasses}
-                        onClick={() => setOpen(false)}
-                      >
-                        {item.label}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            </SheetContent>
-          </Sheet>
         </div>
       </div>
     </header>
