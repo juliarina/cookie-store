@@ -74,7 +74,7 @@ export default function Header() {
                 aria-label="Toggle menu"
                 className="inline-flex h-10 pr-3 items-center justify-start rounded-full text-stone-700 transition hover:bg-stone-100 md:hidden"
               >
-                <LuMenu className="h-7 w-7" style={{ strokeWidth: 1.8}} />
+                <LuMenu className="h-6 w-6" style={{ strokeWidth: 1.8}} />
               </button>
             </SheetTrigger>
             <SheetContent side="left" className="md:hidden max-w-80">
@@ -116,7 +116,7 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-1 sm:gap-2">
+        <div className="flex items-center gap-0.5 sm:gap-1.5">
           <Sheet open={bagOpen} onOpenChange={setBagOpen}>
             <SheetTrigger asChild>
               <button
@@ -124,7 +124,7 @@ export default function Header() {
                 aria-label={`Open bag, ${totalCount} items`}
                 className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-stone-700 transition-all duration-200 hover:scale-105 hover:bg-stone-100"
               >
-                <HiOutlineShoppingBag className="h-7 w-7 sm:h-6 sm:w-6" />
+                <HiOutlineShoppingBag className="h-6 w-6" />
                 {totalCount > 0 && (
                   <span
                     key={totalCount}
@@ -310,7 +310,7 @@ setBagOpen(false)
                 aria-label="Sign in"
                 className="inline-flex h-10 w-10 items-center justify-center rounded-full text-stone-700 transition-all duration-200 hover:scale-105 hover:bg-stone-100 sm:hidden"
               >
-                <FiUser className="h-7 w-7" style={{ strokeWidth: 1.7 }} />
+                <FiUser className="h-6 w-6" style={{ strokeWidth: 1.7 }} />
               </Link>
               <Link
                 to="/login"
