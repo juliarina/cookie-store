@@ -1,11 +1,11 @@
 import { useCallback, useMemo, useState, type ReactNode } from "react"
-import { CartContext, type CartItem } from "./CartContext"
+import { BagContext, type BagItem } from "./BagContext"
 import type { Cookie } from "../data/cookies"
 
-export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([])
+export function BagProvider({ children }: { children: ReactNode }) {
+  const [items, setItems] = useState<BagItem[]>([])
 
-  const addToCart = useCallback((cookie: Cookie) => {
+  const addToBag = useCallback((cookie: Cookie) => {
     setItems((prev) => {
       const existing = prev.find((item) => item.cookie.id === cookie.id)
       if (existing) {
@@ -25,7 +25,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     })
   }, [])
 
-  const removeFromCart = useCallback((id: string) => {
+  const removeFromBag = useCallback((id: string) => {
     setItems((prev) => prev.filter((item) => item.cookie.id !== id))
   }, [])
 
@@ -41,7 +41,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     )
   }, [])
 
-  const clearCart = useCallback(() => setItems([]), [])
+  const clearBag = useCallback(() => setItems([]), [])
 
   const value = useMemo(
     () => ({
@@ -51,13 +51,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
         (sum, item) => sum + item.cookie.price * item.quantity,
         0,
       ),
-      addToCart,
-      removeFromCart,
+      addToBag,
+      removeFromBag,
       updateQuantity,
-      clearCart,
+      clearBag,
     }),
-    [items, addToCart, removeFromCart, updateQuantity, clearCart],
+    [items, addToBag, removeFromBag, updateQuantity, clearBag],
   )
 
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>
+  return <BagContext.Provider value={value}>{children}</BagContext.Provider>
 }

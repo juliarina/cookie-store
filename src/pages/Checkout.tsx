@@ -1,17 +1,17 @@
 import { useState, type FormEvent } from "react"
 import { Link } from "react-router"
-import { ArrowRight, Package, ShoppingCart, Trash2 } from "lucide-react"
+import { ArrowRight, Package, ShoppingBag, Trash2 } from "lucide-react"
 import { RxCookie } from "react-icons/rx"
 import { useAuth } from "../context/AuthContext"
-import { useCart } from "../context/CartContext"
+import { useBag } from "../context/BagContext"
 import { useOrders } from "../context/OrderContext"
 
 const inputClasses =
   "w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-stone-900 outline-none transition placeholder:text-stone-400 focus:border-amber-500 focus:ring-4 focus:ring-amber-500/15"
 
 export default function Checkout() {
-  const { items, totalPrice, removeFromCart, updateQuantity, clearCart } =
-    useCart()
+  const { items, totalPrice, removeFromBag, updateQuantity, clearBag } =
+    useBag()
   const { user } = useAuth()
   const { placeOrder } = useOrders()
   const [placed, setPlaced] = useState(false)
@@ -36,7 +36,7 @@ export default function Checkout() {
         address: String(formData.get("address") ?? ""),
       },
     })
-    clearCart()
+    clearBag()
     setPlacedOrderId(order.id)
     setPlaced(true)
   }
@@ -87,12 +87,12 @@ export default function Checkout() {
   if (items.length === 0) {
     return (
       <section className="mx-auto max-w-2xl px-6 py-24 text-center sm:px-8">
-        <ShoppingCart className="mx-auto h-16 w-16 text-stone-300" />
+        <ShoppingBag className="mx-auto h-16 w-16 text-stone-300" />
         <h1 className="mt-6 text-3xl font-bold tracking-tight text-stone-900">
-          Your cart is empty
+          Your bag is empty
         </h1>
         <p className="mt-3 text-stone-600">
-          Add some cookies to your cart before checking out.
+          Add some cookies to your bag before checking out.
         </p>
         <Link
           to="/menu"
@@ -270,8 +270,8 @@ export default function Checkout() {
                 </div>
                 <button
                   type="button"
-                  aria-label={`Remove ${item.cookie.name} from cart`}
-                  onClick={() => removeFromCart(item.cookie.id)}
+                  aria-label={`Remove ${item.cookie.name} from bag`}
+                  onClick={() => removeFromBag(item.cookie.id)}
                   className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-stone-400 transition hover:bg-red-50 hover:text-red-500"
                 >
                   <Trash2 className="h-4 w-4" />

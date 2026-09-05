@@ -3,7 +3,7 @@ import Layout from "./components/layout/Layout"
 import { ScrollToTop } from "./components/ScrollToTop"
 import { RequireAuth } from "./components/auth/RequireAuth"
 import { AuthProvider } from "./context/AuthProvider"
-import { CartProvider } from "./context/CartProvider"
+import { BagProvider } from "./context/BagProvider"
 import { OrderProvider } from "./context/OrderProvider"
 import About from "./pages/About"
 import Checkout from "./pages/Checkout"
@@ -19,7 +19,7 @@ function App() {
   return (
     <AuthProvider>
       <OrderProvider>
-        <CartProvider>
+        <BagProvider>
           <BrowserRouter>
             <ScrollToTop />
             <Routes>
@@ -57,7 +57,7 @@ function App() {
               </Route>
             </Routes>
           </BrowserRouter>
-        </CartProvider>
+        </BagProvider>
       </OrderProvider>
     </AuthProvider>
   )

@@ -6,7 +6,7 @@ import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { LuMenu } from "react-icons/lu"
 import { RxCookie } from "react-icons/rx"
 import { useAuth } from "../../context/AuthContext"
-import { useCart } from "../../context/CartContext"
+import { useBag } from "../../context/BagContext"
 import cookieImage from "../../assets/cookie.webp"
 import {
   DropdownMenu,
@@ -46,10 +46,10 @@ const sheetLinkClasses = ({ isActive }: { isActive: boolean }) =>
 
 export default function Header() {
   const [open, setOpen] = useState(false)
-  const [cartOpen, setCartOpen] = useState(false)
+  const [bagOpen, setBagOpen] = useState(false)
   const { user, logout } = useAuth()
-  const { items, totalCount, totalPrice, updateQuantity, removeFromCart } =
-    useCart()
+  const { items, totalCount, totalPrice, updateQuantity, removeFromBag } =
+    useBag()
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -59,7 +59,7 @@ export default function Header() {
   }
 
   useEffect(() => {
-    setCartOpen(false)
+    setBagOpen(false)
     setOpen(false)
   }, [location])
 
@@ -117,11 +117,11 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-1 sm:gap-2">
-          <Sheet open={cartOpen} onOpenChange={setCartOpen}>
+          <Sheet open={bagOpen} onOpenChange={setBagOpen}>
             <SheetTrigger asChild>
               <button
                 type="button"
-                aria-label={`Open cart, ${totalCount} items`}
+                aria-label={`Open bag, ${totalCount} items`}
                 className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-stone-700 transition-all duration-200 hover:scale-105 hover:bg-stone-100"
               >
                 <HiOutlineShoppingBag className="h-7 w-7 sm:h-6 sm:w-6" />
@@ -139,7 +139,7 @@ export default function Header() {
             <SheetContent side="right" className="w-[100vw] data-[side=right]:w-[100vw] max-w-sm">
               <SheetHeader>
                 <SheetTitle className="text-sm font-semibold text-stone-500">
-                  Your cart
+                  Your bag
                 </SheetTitle>
                 <SheetDescription>
                   {totalCount} item{totalCount === 1 ? "" : "s"}
@@ -150,14 +150,14 @@ export default function Header() {
                 <div className="flex flex-1 flex-col items-center justify-center px-6 py-16 text-center">
                   <HiOutlineShoppingBag className="h-12 w-12 text-stone-300" />
                   <p className="mt-4 text-sm font-medium text-stone-600">
-                    Your cart is empty
+                    Your bag is empty
                   </p>
                   <p className="mt-1 text-xs text-stone-400">
                     Add some cookies to get started.
                   </p>
                   <Link
                     to="/menu"
-                    onClick={() => setCartOpen(false)}
+                    onClick={() => setBagOpen(false)}
                     className="mt-5 inline-flex rounded-full bg-stone-900 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-stone-800"
                   >
                     Browse the Menu
@@ -225,8 +225,8 @@ export default function Header() {
                           </span>
                           <button
                             type="button"
-                            aria-label={`Remove ${item.cookie.name} from cart`}
-                            onClick={() => removeFromCart(item.cookie.id)}
+                            aria-label={`Remove ${item.cookie.name} from bag`}
+                            onClick={() => removeFromBag(item.cookie.id)}
                             className="mt-1 flex h-7 w-7 items-center justify-center rounded-full text-stone-400 transition hover:bg-red-50 hover:text-red-500"
                           >
                             <Trash2 className="h-4 w-4" />
@@ -248,7 +248,7 @@ export default function Header() {
                     <button
                       type="button"
                       onClick={() => {
-                        setCartOpen(false)
+setBagOpen(false)
                         navigate("/checkout")
                       }}
                       className="mt-2 w-full rounded-full bg-stone-900 py-3 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.01] hover:bg-amber-500"

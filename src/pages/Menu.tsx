@@ -1,13 +1,13 @@
 import { Plus } from "lucide-react"
 import RatingStars from "../components/RatingStars"
-import { useCart } from "../context/CartContext"
+import { useBag } from "../context/BagContext"
 import { cookies, LOW_STOCK_THRESHOLD } from "../data/cookies"
 import cookieImage from "../assets/cookie.webp"
 
 export default function Menu() {
-  const { items, addToCart } = useCart()
+  const { items, addToBag } = useBag()
 
-  function cartQuantity(id: string) {
+  function bagQuantity(id: string) {
     return items.find((item) => item.cookie.id === id)?.quantity ?? 0
   }
 
@@ -27,10 +27,10 @@ export default function Menu() {
         {[...cookies]
           .sort((a, b) => Number(a.stock === 0) - Number(b.stock === 0))
           .map((cookie) => {
-          const inCart = cartQuantity(cookie.id)
+          const inBag = bagQuantity(cookie.id)
           const outOfStock = cookie.stock === 0
-          const atLimit = inCart >= cookie.stock
-          const remaining = cookie.stock - inCart
+          const atLimit = inBag >= cookie.stock
+          const remaining = cookie.stock - inBag
           const lowStock = !outOfStock && remaining <= LOW_STOCK_THRESHOLD
 
           return (
@@ -83,13 +83,13 @@ export default function Menu() {
                   <button
                     type="button"
                     disabled={outOfStock || atLimit}
-                    onClick={() => addToCart(cookie)}
+                    onClick={() => addToBag(cookie)}
                     className="hidden w-full items-center justify-center gap-1.5 rounded-full bg-stone-900 px-3 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:scale-[1.04] hover:bg-amber-500 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-stone-200 disabled:text-stone-400 disabled:hover:scale-100 sm:inline-flex sm:w-auto sm:px-4"
                   >
                     {outOfStock ? (
                       "Out of Stock"
                     ) : atLimit ? (
-                      "Max in Cart"
+                      "Max in Bag"
                     ) : (
                       <>
                         <Plus className="hidden h-4 w-4 sm:block" />

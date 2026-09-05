@@ -9,7 +9,7 @@ import {
 import cookieImage from "../assets/cookie.webp"
 import RatingStars from "../components/RatingStars"
 import { Skeleton } from "../components/ui/skeleton"
-import { useCart } from "../context/CartContext"
+import { useBag } from "../context/BagContext"
 import { cookies, LOW_STOCK_THRESHOLD } from "../data/cookies"
 import foodIngredients from "../assets/food-ingredients.webp"
 import makingCookies from "../assets/making-cookies.webp"
@@ -57,7 +57,7 @@ const bestSellers = [
 ].filter((cookie) => cookie !== undefined)
 
 export default function Home() {
-  const { items, addToCart } = useCart()
+  const { items, addToBag } = useBag()
 
   return (
     <>
@@ -119,11 +119,11 @@ export default function Home() {
 
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {bestSellers.map((cookie) => {
-            const inCart =
+            const inBag =
               items.find((item) => item.cookie.id === cookie.id)?.quantity ?? 0
             const outOfStock = cookie.stock === 0
-            const atLimit = inCart >= cookie.stock
-            const remaining = cookie.stock - inCart
+            const atLimit = inBag >= cookie.stock
+            const remaining = cookie.stock - inBag
             const lowStock = !outOfStock && remaining <= LOW_STOCK_THRESHOLD
 
             return (
@@ -171,17 +171,17 @@ export default function Home() {
                   <button
                     type="button"
                     disabled={outOfStock || atLimit}
-                    onClick={() => addToCart(cookie)}
+                    onClick={() => addToBag(cookie)}
                     className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-stone-900 px-5 py-3 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-amber-500 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-stone-200 disabled:text-stone-400 disabled:hover:scale-100"
                   >
                     {outOfStock ? (
                       "Out of Stock"
                     ) : atLimit ? (
-                      "Max in Cart"
+                      "Max in Bag"
                     ) : (
                       <>
                         <Plus className="h-4 w-4" />
-                        Add to Cart
+                        Add to Bag
                       </>
                     )}
                   </button>

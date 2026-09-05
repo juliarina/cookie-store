@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react"
-import type { CartItem } from "./CartContext"
+import type { BagItem } from "./BagContext"
 
 export type OrderStatus = "unpaid" | "sent" | "done" | "canceled"
 
@@ -14,7 +14,7 @@ export type OrderDelivery = {
 export type Order = {
   id: string
   date: string
-  items: CartItem[]
+  items: BagItem[]
   subtotal: number
   deliveryFee: number
   total: number
