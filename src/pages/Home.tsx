@@ -101,8 +101,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-24 sm:px-8 lg:px-12">
-        <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
+      <section className="mx-auto max-w-6xl px-6 pt-12 pb-24 sm:px-8 lg:px-12">
+        <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-end sm:gap-6">
           <div>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl">
               Our best sellers
