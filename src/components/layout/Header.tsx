@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link, NavLink, useLocation, useNavigate } from "react-router"
-import { Minus, Plus, Trash2 } from "lucide-react"
+import { Minus, Plus, Trash2, X } from "lucide-react"
 import { FiUser } from "react-icons/fi"
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { LuMenu } from "react-icons/lu"
@@ -17,6 +17,7 @@ import {
 } from "../ui/dropdown-menu"
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -77,8 +78,21 @@ export default function Header() {
                 <LuMenu className="h-6 w-6" style={{ strokeWidth: 1.8}} />
               </button>
             </SheetTrigger>
-            <SheetContent side="left" className="md:hidden max-w-80">
-              <nav className="pl-6 pt-8">
+            <SheetContent
+              side="left"
+              showCloseButton={false}
+              className="md:hidden max-w-80"
+            >
+              <SheetClose asChild>
+                <button
+                  type="button"
+                  aria-label="Close menu"
+                  className="absolute left-4.5 top-4 inline-flex h-8 w-8 items-center justify-center rounded-full text-stone-700 transition hover:bg-stone-100"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </SheetClose>
+              <nav className="pl-7 pt-16">
                 <ul className="flex flex-col gap-4">
                   {navItems.map((item) => (
                     <li key={item.to}>
