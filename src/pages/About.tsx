@@ -76,9 +76,9 @@ export default function About() {
         </div>
       </div>
 
-      <div className="mt-24">
+      <div className="mt-20">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="mt-30 text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl">
             What they say about our cookies
           </h2>
           <p className="mt-4 text-base text-stone-600 sm:text-lg">
