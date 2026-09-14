@@ -53,7 +53,6 @@ function FadeInImage({
 const bestSellers = [
   cookies.find((cookie) => cookie.id === "classic-chocolate-chip"),
   cookies.find((cookie) => cookie.id === "peanut-butter"),
-  cookies.find((cookie) => cookie.id === "salted-caramel"),
 ].filter((cookie) => cookie !== undefined)
 
 export default function Home() {
