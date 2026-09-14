@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react"
 import { Link } from "react-router"
 import { ArrowRight, Package, ShoppingBag, Trash2 } from "lucide-react"
-import { RxCookie } from "react-icons/rx"
+import cookieImage from "../assets/cookie.webp"
 import { useAuth } from "../context/AuthContext"
 import { useBag } from "../context/BagContext"
 import { useOrders } from "../context/OrderContext"
@@ -231,9 +231,11 @@ export default function Checkout() {
           <ul className="mt-6 divide-y divide-stone-100">
             {items.map((item) => (
               <li key={item.cookie.id} className="flex items-center gap-3 py-4">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-amber-50">
-                  <RxCookie className="h-9 w-9 text-amber-500" />
-                </div>
+                <img
+                  src={cookieImage}
+                  alt={item.cookie.name}
+                  className="h-11 w-11 shrink-0 rounded-2xl object-cover"
+                />
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-semibold text-stone-900">
                     {item.cookie.name}
