@@ -1,4 +1,5 @@
 import { Plus } from "lucide-react"
+import { Link } from "react-router"
 import RatingStars from "../components/RatingStars"
 import { useBag } from "../context/BagContext"
 import { cookies, LOW_STOCK_THRESHOLD } from "../data/cookies"
@@ -34,9 +35,10 @@ export default function Menu() {
           const lowStock = !outOfStock && remaining <= LOW_STOCK_THRESHOLD
 
           return (
-            <article
+            <Link
               key={cookie.id}
-              className={`group relative flex flex-col overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-amber-200 hover:shadow-xl hover:shadow-amber-900/10 ${
+              to={`/menu/${cookie.id}`}
+              className={`group relative flex flex-col overflow-hidden rounded-3xl border border-stone-200 bg-white no-underline shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-amber-200 hover:shadow-xl hover:shadow-amber-900/10 ${
                 outOfStock
                   ? "after:pointer-events-none after:absolute after:inset-0 after:bg-black/25 after:content-['']"
                   : ""
@@ -83,7 +85,11 @@ export default function Menu() {
                   <button
                     type="button"
                     disabled={outOfStock || atLimit}
-                    onClick={() => addToBag(cookie)}
+                    onClick={(event) => {
+                      event.preventDefault()
+                      event.stopPropagation()
+                      addToBag(cookie)
+                    }}
                     className="hidden w-full items-center justify-center gap-1.5 rounded-full bg-stone-900 px-3 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:scale-[1.04] hover:bg-amber-500 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-stone-200 disabled:text-stone-400 disabled:hover:scale-100 sm:inline-flex sm:w-auto sm:px-4"
                   >
                     {outOfStock ? (
@@ -107,7 +113,7 @@ export default function Menu() {
                   </span>
                 </div>
               )}
-            </article>
+            </Link>
           )
         })}
       </div>

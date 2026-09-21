@@ -25,6 +25,23 @@ export function BagProvider({ children }: { children: ReactNode }) {
     })
   }, [])
 
+  const addQuantity = useCallback((cookie: Cookie, quantity: number) => {
+    if (quantity <= 0 || cookie.stock <= 0) {
+      return
+    }
+    const capped = Math.min(quantity, cookie.stock)
+    setItems((prev) => {
+      const existing = prev.find((item) => item.cookie.id === cookie.id)
+      if (existing) {
+        const next = Math.min(existing.quantity + capped, cookie.stock)
+        return prev.map((item) =>
+          item.cookie.id === cookie.id ? { ...item, quantity: next } : item,
+        )
+      }
+      return [...prev, { cookie, quantity: capped }]
+    })
+  }, [])
+
   const removeFromBag = useCallback((id: string) => {
     setItems((prev) => prev.filter((item) => item.cookie.id !== id))
   }, [])
@@ -52,11 +69,12 @@ export function BagProvider({ children }: { children: ReactNode }) {
         0,
       ),
       addToBag,
+      addQuantity,
       removeFromBag,
       updateQuantity,
       clearBag,
     }),
-    [items, addToBag, removeFromBag, updateQuantity, clearBag],
+    [items, addToBag, addQuantity, removeFromBag, updateQuantity, clearBag],
   )
 
   return <BagContext.Provider value={value}>{children}</BagContext.Provider>

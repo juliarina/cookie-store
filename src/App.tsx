@@ -8,6 +8,7 @@ import { OrderProvider } from "./context/OrderProvider"
 import About from "./pages/About"
 import Checkout from "./pages/Checkout"
 import Contact from "./pages/Contact"
+import CookieDetail from "./pages/CookieDetail"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Menu from "./pages/Menu"
@@ -26,6 +27,7 @@ function App() {
               <Route element={<Layout />}>
                 <Route index element={<Home />} />
                 <Route path="menu" element={<Menu />} />
+                <Route path="menu/:id" element={<CookieDetail />} />
                 <Route path="about" element={<About />} />
                 <Route path="contact" element={<Contact />} />
                 <Route

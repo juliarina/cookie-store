@@ -3,10 +3,16 @@ import { Star } from "lucide-react"
 type RatingStarsProps = {
   rating: number
   className?: string
+  size?: number
 }
 
-export default function RatingStars({ rating, className }: RatingStarsProps) {
+export default function RatingStars({
+  rating,
+  className,
+  size = 3.5,
+}: RatingStarsProps) {
   const pct = Math.max(0, Math.min(100, (rating / 5) * 100))
+  const starSize = `${size * 4}px`
 
   return (
     <div
@@ -16,7 +22,7 @@ export default function RatingStars({ rating, className }: RatingStarsProps) {
     >
       <div className="flex gap-0.5 text-stone-300">
         {Array.from({ length: 5 }).map((_, i) => (
-          <Star key={i} className="h-3.5 w-3.5 fill-current" />
+          <Star key={i} className="fill-current" style={{ height: starSize, width: starSize }} />
         ))}
       </div>
       <div
@@ -24,7 +30,11 @@ export default function RatingStars({ rating, className }: RatingStarsProps) {
         style={{ width: `${pct}%` }}
       >
         {Array.from({ length: 5 }).map((_, i) => (
-          <Star key={i} className="h-3.5 w-3.5 shrink-0 fill-current" />
+          <Star
+            key={i}
+            className="shrink-0 fill-current"
+            style={{ height: starSize, width: starSize }}
+          />
         ))}
       </div>
     </div>

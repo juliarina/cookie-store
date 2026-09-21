@@ -11,6 +11,7 @@ export type BagContextValue = {
   totalCount: number
   totalPrice: number
   addToBag: (cookie: Cookie) => void
+  addQuantity: (cookie: Cookie, quantity: number) => void
   removeFromBag: (id: string) => void
   updateQuantity: (id: string, quantity: number) => void
   clearBag: () => void
